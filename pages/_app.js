@@ -11,9 +11,9 @@ function MyApp({ Component, pageProps }, props) {
 
 <>
 <AuthProvider>
-<Navbar {...pageProps} />
-
 <div className="Main">  
+
+<Navbar {...pageProps} />
 <Component {...pageProps} />
 </div>
   

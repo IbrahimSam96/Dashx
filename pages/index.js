@@ -5,7 +5,6 @@ import nookies from "nookies";
 
 // Admin service account/ FirebaseSDK 
 import { firebaseAdmin } from "../firebaseAdmin";
-// import { firebaseClient } from "../firebaseClient";
 
 
 
