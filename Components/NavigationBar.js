@@ -13,7 +13,6 @@ return (
 
 <div className="Navbar">
 
-
     <div className="FinancialCharts">
 
     <Link className="NavLink" href= "/FinancialCharts"> 
@@ -22,7 +21,7 @@ return (
      backgroundColor:"transparent", display:"grid",
       gridTemplateColumns:"repeat(2, 1fr)", 
       gridTemplateRows:"repeat(1, 75px)"}} >
-    <span style={{gridColumn:"1/3", gridRow:"1/1", fontSize:"1.2rem", paddingTop:"25px", paddingLeft:"25px", fontFamily:"'Trebuchet MS',  Arial, sans-serif", cursor:"pointer" }}>Financial Charts</span>
+    <span style={{gridColumn:"1/3", gridRow:"1/1", fontSize:"1.1rem", paddingTop:"25px", paddingLeft:"25px", fontFamily:"'Trebuchet MS',  Arial, sans-serif", cursor:"pointer" }}>Financial Charts</span>
 
     </div>
     </Link> 
@@ -30,7 +29,7 @@ return (
     </div>
 
     
-    <div className="Dashboards">
+  <div className="Dashboards">
 
     <Link className="NavLink" href= "/Dashboards"> 
     <div className="hodl" 
@@ -38,7 +37,7 @@ return (
      backgroundColor:"transparent", display:"grid",
       gridTemplateColumns:"repeat(2, 1fr)", 
       gridTemplateRows:"repeat(1, 75px)"}} >
-    <span style={{gridColumn:"1/3", gridRow:"1/1", fontSize:"1.2rem", paddingTop:"25px", paddingLeft:"25px", fontFamily:"'Trebuchet MS',  Arial, sans-serif", cursor:"pointer" }}>Dashboards</span>
+    <span style={{gridColumn:"1/3", gridRow:"1/1", fontSize:"1.1rem", paddingTop:"25px", paddingLeft:"25px", fontFamily:"'Trebuchet MS',  Arial, sans-serif", cursor:"pointer" }}>Dashboards</span>
 
     </div>
     </Link> 
@@ -55,20 +54,33 @@ return (
      backgroundColor:"transparent", display:"grid",
       gridTemplateColumns:"repeat(2, 1fr)", 
       gridTemplateRows:"repeat(1, 75px)"}} >
-    <span style={{gridColumn:"1/3", gridRow:"1/1", fontSize:"1.2rem", paddingTop:"25px", paddingLeft:"25px", fontFamily:"'Trebuchet MS',  Arial, sans-serif", cursor:"pointer" }}>Reports</span>
+    <span style={{gridColumn:"1/3", gridRow:"1/1", fontSize:"1.1rem", paddingTop:"25px", paddingLeft:"25px", fontFamily:"'Trebuchet MS',  Arial, sans-serif", cursor:"pointer" }}>Reports</span>
 
     </div>
     </Link> 
+
+    <span className="report-tooltip"><p>coming soon!</p> </span>
     </div>
+
+    
 
 
 {props.email ?
+
+
 // User Layout
 <div className="UserAccount">
 
-  <span className="email" style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
-  {props.email} 
-  </span>
+{props.token.name ? 
+
+ <span className="email" style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
+ {props.token.name.split(" ")[0]} 
+ </span>
+ :
+ <span className="email" style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
+ {props.email} 
+ </span>
+}
 
   <div className="emailTooltip">
   
@@ -101,6 +113,8 @@ return (
       </div>
 
     </div>
+    
+ 
    :
 
   //  Non-User Layout
@@ -125,7 +139,10 @@ return (
      </div>
 
  }
-   
+
+
+
+
 
     </div>
 

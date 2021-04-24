@@ -2,17 +2,29 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { firebaseClient } from '../FirebaseIntialization';
 
+import GoogleButton from 'react-google-button'
+import GithubButton from 'react-github-login-button'
 
  const Login = () => {
 
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
+  const[loginerror, setloginerror] = useState('');
+  const [show, setShow] = useState(false);
+
+  var provider = new firebaseClient.auth.GoogleAuthProvider();
+  // GITHUBCLIENT AND SECRET FOR APP AUTH
+  // var clID = "ac95ec9004b3fd5e4783";
+  // var clSec = "4cf4d60872cb414234dbcc0a96d5d02864534a66";
+  var providerGithub = new firebaseClient.auth.GithubAuthProvider();
+
+  
   return (
 
 <div className="LoginPage" >
     
-    <div className="login-box">
+<div className="login-box">
         
     <h2>Login</h2>
     <form>
@@ -36,8 +48,35 @@ import { firebaseClient } from '../FirebaseIntialization';
        <label>Password</label>
     </div>
     <a href="#" onClick={async () => {
-          await firebaseClient.auth().signInWithEmailAndPassword(email, pass);
-          window.location.href = '/';
+          await firebaseClient.auth().signInWithEmailAndPassword(email, pass)
+
+         .then((result) => {
+              window.location.href = '/';
+
+              var credential = result.credential;
+          
+              // This gives you a Google Access Token. You can use it to access the Google API.
+              var token = credential.accessToken;
+              // The signed-in user info.
+              var user = result.user;
+              // ...
+              console.log(credential,token, user)
+        
+            }).catch((error) => {
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              // The email of the user's account used.
+              var email = error.email;
+              // The firebase.auth.AuthCredential type that was used.
+              var credential = error.credential;
+        
+             
+              setloginerror(errorMessage)
+              setShow(true)
+              // ...
+              
+            });
         }}
       >
      <span></span> 
@@ -50,7 +89,96 @@ import { firebaseClient } from '../FirebaseIntialization';
 
       </div>
 
-    </div>
+<div className="Google-SignUp2">
+
+<h2>OR</h2>
+
+<GoogleButton 
+className="Google-Button2"
+  onClick={ async () => { 
+    await  firebaseClient.auth()
+    .signInWithPopup(provider)
+    .then((result) => {
+      window.location.href = '/';
+      var credential = result.credential;
+  
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+      console.log(user)
+
+    }).catch((error) => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+
+      setloginerror(errorMessage)
+      setShow(true)
+    });
+  }}
+/>
+
+<GithubButton
+className="Github-Button2"
+  onClick={ async () => { 
+    await  firebaseClient.auth()
+    .signInWithPopup(providerGithub)
+    .then((result) => {
+      window.location.href = '/';
+      var credential = result.credential;
+  
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+      console.log(credential,token, user)
+
+    }).catch((error) => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+
+     
+      setloginerror(errorMessage)
+      setShow(true)
+      // ...
+      
+    });
+  }}
+  />
+
+ </div>
+
+ 
+{ show? 
+
+ <div className="SignuperrorMessageNotification">
+    <a onClick={ () => {  setShow(false)}} >X </a>
+  <h2>Oh snap! You got an error!</h2>
+  <p>
+  {loginerror}
+  </p>
+
+</ div>
+:
+
+null
+  
+}
+  </div>
+
 
     
   );
@@ -58,14 +186,3 @@ import { firebaseClient } from '../FirebaseIntialization';
 
 export default Login
 
-
- /* <button
-        onClick={async () => {
-          await firebaseClient
-            .auth()
-            .createUserWithEmailAndPassword(email, pass);
-          window.location.href = '/';
-        }}
-      >
-        Create account
-      </button> */

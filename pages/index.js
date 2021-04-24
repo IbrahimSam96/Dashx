@@ -1,11 +1,24 @@
-import Head from 'next/head'
-import { useRouter } from 'next/router'
+import Head from 'next/head';
+import Image from 'next/image'
+import dynamic from 'next/dynamic'
+
+import { useRef } from 'react';
 
 import nookies from "nookies";
 
 // Admin service account/ FirebaseSDK 
 import { firebaseAdmin } from "../firebaseAdmin";
+//  Components
+import LineGraph from "../Components/Linegraph"
+import BarGraph from "../Components/GoogleSheets"
 
+
+const LivePortfolioGraph = dynamic( () => {
+
+  return import("../Components/FinancialChartIntro")
+  }, {ssr: false}
+  
+);
 
 
 export const getServerSideProps = async (context) => {
@@ -19,7 +32,8 @@ export const getServerSideProps = async (context) => {
     // FETCH STUFF HERE
 
     return {
-      props: {  email, uid },
+    
+      props: {  email, uid , token},
     };
   } catch (err) {
     // either the `token` cookie didn't exist
@@ -29,8 +43,6 @@ export const getServerSideProps = async (context) => {
     // or token verification failed
     // either way: redirect to the login page
     return {
-      
-  
       props: {} ,
     };
   }
@@ -38,21 +50,107 @@ export const getServerSideProps = async (context) => {
 
 const Main = (props) => {
 
-  console.log(props.email)
+  if(props.token) {
+
+    if(props.token.name){
+    console.log(` Hello ${props.token.name.split(" ")[0]} :)` )
+    }
+
+  }
   
+  const g = useRef(null);
+  const GAV = useRef(null);
+
   return (
 
-
-    <div>
-
+    <>
       <Head>
         <title> Create Free Financial Graphs, Interactive Dashboards, and Live Reports --GraphX </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-  
+      <div className="landing">
+      
+      <div className="landing-bar" >
+      
+      </div>
+      
+      <div className="landing-intro">
 
-    </div>
+      <h2>
+        Create Free Interactive Charts & Dashboards. 
+      </h2>
+        <p> 
+          GraphX is a <strong> social visual development platform </strong> 
+          for all types of professionals to create visuals and insights
+           to help paint pictures, 
+           showcase dashbaords
+            and build a collection of data driven visuals.
+        </p>
+
+        <div className="LineGraph">
+        <LineGraph/>
+
+        </div>
+
+         </div>
+
+      <div className="landing-intro2" >
+{/* https://docs.google.com/spreadsheets/d/1eK264_It9ezV8g1Ah_PROiOiOMkKg3KYszvcNHbjso0/edit#gid=0 */}
+      <h2>
+        Connect your Charts using Google Sheets.  
+      </h2>
+
+        <p> 
+          Easily colllaborate with your peers 
+          to create up-to date charts
+           using google sheets.
+        </p>
+        
+       <div  className="GoogleSheets-Logo">
+        <Image
+        src="/google-sheets.svg"
+        alt="Google-Sheets"
+        width={100} height={100} layout="responsive" 
+        />
+        </div>
+
+        <div className="GoogleSheetsExample">
+        <BarGraph/>
+        </div>
+
+      </div>
+      
+      <div className="landing-intro3">
+
+      <h2>
+        Display Stunning Financial Charts
+      </h2>
+
+      <p> 
+          Cutomize the chart upon your need. 
+        </p>
+
+       <div ref={g} className="FinancialChartIntro" >
+      
+         <LivePortfolioGraph g={g}  GAV={GAV}/>
+
+        </div> 
+        
+      </div>
+
+
+         {/* <video playsInline autoPlay loop muted className="landing-video">
+
+        <source src={ require("../public/landingVideo1.mp4") }  type="video/mp4" />
+
+          </video> */}
+
+      </div>
+
+    </>
+
+     
   )
 
 }
