@@ -99,12 +99,12 @@ return (
         Sign out
       </button> 
 
-      <Link  href= "/Profile"> 
+      <Link  href= "/profile"> 
       <span className="ProfileLink" style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
         Profile
       </span> 
       </Link> 
-      <Link  href= "/Create"> 
+      <Link  href= "/create"> 
       <span className="CreateLink " style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
         Create
       </span>
@@ -128,7 +128,7 @@ return (
   </a>
   </Link> 
 
-  <Link href="login"> 
+  <Link href="/login"> 
   <a style={{width:"100%", height:"50%", maxWidth:"80px"}} >
   <span className="LogIn" style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
   Log In

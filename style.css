@@ -56,8 +56,6 @@ a {
 }
 
 
-
-
 .landing-intro{
   grid-column: 1/13;
   grid-row: 2/6;
@@ -69,15 +67,6 @@ a {
   grid-template-columns: repeat(14, 1fr);
   grid-template-rows: repeat(7, 1fr);
 }
-
-.landing-intro:active{
-
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
- 
-}
-
-
 
 .landing-intro h2{
   font-family: Trebuchet MS,  Arial, sans-serif;
@@ -132,14 +121,6 @@ a {
   display: grid;
   grid-template-columns: repeat(14, 1fr);
   grid-template-rows: repeat(7, 1fr);
-}
-
-
-.landing-intro2:active{
-
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
- 
 }
 
 
@@ -206,14 +187,6 @@ a {
 }
 
 
-.landing-intro3:active{
-
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
- 
-}
-
-
 .landing-intro3 h2{
   font-family: Trebuchet MS,  Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -226,12 +199,11 @@ a {
   margin-left: 15px;
  
   grid-column: 1/8;
-  grid-row: 2/4;
+  grid-row: 1/4;
 
 }
 
-
-.landing-intro3 p{
+.landing-intro3 .la3p{
   font-family: Trebuchet MS,  Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #c7c9d3;
@@ -248,20 +220,71 @@ a {
  
 }
 
+.landing-intro3 .Ayre{
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #c7c9d3;
+  font-size: 1.5rem;
+ 
+  max-width: 750px;
+  padding: 25px;
+  letter-spacing: 2px;
+  margin-left: 10px;
+
+  grid-column: 1/8;
+  grid-row: 5/5;
+  
+ 
+}
 
 .FinancialChartIntro{
-  grid-column: 9/15;
-  grid-row: 2/8;
+  grid-column: 8/15;
+  grid-row:1/8;
   max-width: 750px;
-  margin-bottom: 15px;
+  margin-bottom: 125px;
+  margin-top: 15px;
   margin-right: 15px;
 }
 
+.customization{
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #c7c9d3;
+  font-size: 0.8rem;
+ max-height: 175px;
+  max-width: 750px;
+  padding: 5px;
+  letter-spacing: 2px;
+  margin-left: 10px;
+  position: relative;
+  top: -20px;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+  
+ 
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
 
 
+.customization p{
+display: inline-block;
 
+}
 
-
+.customization span{
+  display: inline-block;
+  
+  }
 
 
 /* Navigation Bar.js  */
@@ -334,6 +357,12 @@ a {
     padding-right: 5px;
 
  }
+
+ /* If Username ias too long  */
+ /* .UserAccount span{
+  overflow: hidden;
+  text-overflow: ellipsis;
+ } */
 
 
  .UserAccount:hover .email{
@@ -857,7 +886,6 @@ border-color: #000428;
  
 }
 
-
 .SignuperrorMessageNotification{
   grid-column: 4/6;
   grid-row: 1/1;
@@ -893,4 +921,50 @@ border-color: #000428;
 
 /*  */
 
+  /*Hide ScrollBar*/
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+  }
+  
+  /* Dropdown for Currency */
+  
+  .exchange{
+    background:#1E222D;
+     width: 120px;
+     padding: 2px;
+     font-family:Arial, Helvetica, sans-serif;
+     font-size:11px;
+     font-weight:600;
+     color:#fff;
+     line-height: 1;
+     border: 0;
+     border-radius: 0;
+     height: 42px;
+    -webkit-appearance: none;
+   
+    }
+  
+  .select-div{
+      width: 120px;
+      height: 42px;
+      overflow: hidden;
+      
+      border-top:#575757 1px solid;
+      -webkit-border-radius: 4px 4px 4px 4px;
+       -moz-border-radius: 4px 4px 4px 4px;
+            border-radius: 4px 4px 4px 4px;
+      -webkit-box-shadow: inset 0 2px 4px rgba(107, 105, 105, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+       -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+            -moz-box-shadow:    0px 8px 3px -9px #000000;
+            -webkit-box-shadow: 0px 8px 3px -9px #000000;
+            box-shadow:         0px 8px 3px -9px #000000;
+  }
+  
+
+  select > option { 
+    background: #1E222D;
+    color: white;
+  }
 

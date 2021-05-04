@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
-import { useRef } from 'react';
+import React, { useRef, useState, useMemo, useEffect } from 'react';
 
 import nookies from "nookies";
 
@@ -11,6 +11,8 @@ import { firebaseAdmin } from "../firebaseAdmin";
 //  Components
 import LineGraph from "../Components/Linegraph"
 import BarGraph from "../Components/GoogleSheets"
+import _debounce from 'lodash.debounce';
+
 
 
 const LivePortfolioGraph = dynamic( () => {
@@ -32,8 +34,13 @@ export const getServerSideProps = async (context) => {
     // FETCH STUFF HERE
 
     return {
-    
       props: {  email, uid , token},
+
+      // redirect: {
+      //   permanent: false,
+      //   destination: "/create"
+      // }
+
     };
   } catch (err) {
     // either the `token` cookie didn't exist
@@ -48,7 +55,10 @@ export const getServerSideProps = async (context) => {
   }
 };
 
+
+
 const Main = (props) => {
+
 
   if(props.token) {
 
@@ -57,9 +67,11 @@ const Main = (props) => {
     }
 
   }
-  
+
+
   const g = useRef(null);
-  const GAV = useRef(null);
+  const m = useRef(null);
+
 
   return (
 
@@ -85,7 +97,7 @@ const Main = (props) => {
           for all types of professionals to create visuals and insights
            to help paint pictures, 
            showcase dashbaords
-            and build a collection of data driven visuals.
+            and build collections of data driven visuals.
         </p>
 
         <div className="LineGraph">
@@ -126,18 +138,19 @@ const Main = (props) => {
       <h2>
         Display Stunning Financial Charts
       </h2>
-
-      <p> 
-          Cutomize the chart upon your need. 
+        <span className="la3p">
+       <p> 
+          Create & customize lightweight charts  
         </p>
+        </span>
 
-       <div ref={g} className="FinancialChartIntro" >
-      
-         <LivePortfolioGraph g={g}  GAV={GAV}/>
+        <div ref={g} className="FinancialChartIntro" > 
+
+        <LivePortfolioGraph g={g}  />
 
         </div> 
-        
-      </div>
+
+    </div>
 
 
          {/* <video playsInline autoPlay loop muted className="landing-video">

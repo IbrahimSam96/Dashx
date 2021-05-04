@@ -1,99 +1,242 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
+// import _debounce from 'lodash.debounce';
+// import { createChart } from 'lightweight-charts';
+ 
+
+// const  LivePortfolioGraph = (props) => {
+
+// const otherOptions = {
+// topColor: props.topColor,
+// bottomColor: props.bottomColor,
+// lineColor: props.lineColor,
+// lineWidth: 2,
+// crossHairMarkerVisible: false,
+// }
+
+// const options = {
+//     width: 0,
+//     height: 0,
+//     layout: {
+//     textColor: props.textColor,
+//     backgroundColor: props.backgroundColor,
+//     },
+//     rightPriceScale: {
+//         scaleMargins: {
+//             top: 0.3,
+//             bottom: 0.25,
+//         },
+//     },
+//     timeScale: {
+//         visible: true,
+//     },
+//     crosshair: {
+//         vertLine: {
+//             width: 5,
+//             color: 'rgba(224, 227, 235, 0.1)',
+//             style: 0,
+//         },
+//         horzLine: {
+//             visible: false,
+//             labelVisible: true,
+//         },
+//     },
+//     localization: {
+//         priceFormatter: price => {
+//         const nf = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
+//          return   nf.format(price)
+//         },
+
+//     },    
+//     grid: {
+//         vertLines: {
+//             color: 'rgba(42, 46, 57, 0)',
+//             visible:true
+          
+//         },
+//         horzLines: {
+//             color: 'rgba(42, 46, 57, 0)',
+       
+//         },
+//     },
+
+// }
+
+
+// const chart = React.useRef(createChart(props.g.current, options) );
+
+// var areaSeries = React.useRef(chart.current.addAreaSeries(otherOptions) );
+    
+//     areaSeries.current.setData([
+//         { time: '2019-04-11', value: 80.01 },
+//         { time: '2019-04-12', value: 96.63 },
+//         { time: '2019-04-13', value: 76.64 },
+//         { time: '2019-04-14', value: 81.89 },
+//         { time: '2019-04-15', value: 74.43 },
+//         { time: '2019-04-16', value: 80.01 },
+//         { time: '2019-04-17', value: 96.63 },
+//         { time: '2019-04-18', value: 76.64 },
+//         { time: '2019-04-19', value: 81.89 },
+//         { time: '2019-04-20', value: 74.43 },
+    
+//         { time: '2019-04-21', value: 82.01 },
+//         { time: '2019-04-22', value: 92.63 },
+//         { time: '2019-04-23', value: 93.64 },
+//         { time: '2019-04-24', value: 95.89 },
+//         { time: '2019-04-25', value: 84.43 },
+//         { time: '2019-04-26', value: 90.01 },
+//         { time: '2019-04-27', value: 96.63 },
+//         { time: '2019-04-28', value: 106.64 },
+//         { time: '2019-04-29', value: 121.89 },
+//         { time: '2019-04-30', value: 94.43 },
+//     ]) 
+    
+// const renderCount = React.useRef(1);
+
+// useEffect( ()=> {
+
+// const handleResize = _debounce(() => {
+    
+// chart.current.applyOptions({
+//     width: props.g.current.clientWidth, 
+//     height: props.g.current.clientHeight 
+// });
+
+// } ,10 ); 
+
+// const handleStyle  = _debounce(() => { 
+
+//     // while(props.g.current.children.length > 2){
+
+//     //     props.g.current.removeChild(props.g.current.lastChild)
+              
+//     //     };
+
+// chart.current.applyOptions({ 
+//     layout: { 
+//         backgroundColor:props.backgroundColor, 
+//         textColor: props.textColor
+//     },
+     
+// }); 
+
+// areaSeries.current.applyOptions({
+//     lineColor: props.lineColor,
+//      topColor:props.topColor, 
+//      bottomColor:props.bottomColor 
+//     }); 
+
+// }, 10)
+
+
+// window.addEventListener("resize", handleResize); 
+// window.addEventListener("input", handleStyle); 
+
+
+
+// // Clean Up
+// return () => {
+
+// window.removeEventListener('resize', handleResize);
+
+// window.removeEventListener('input', handleStyle);
+
+// }
+
+// },[props])
+
+
+
+// return (
+// <>
+// <div style={{position:"relative", left:"5%", height:"100%", width:"100%", display:"none"}}>
+
+
+// {console.log(`${renderCount.current ++} time(s)`)}
+// </div>
+// </>
+// )
+
+// }
+
+// export default LivePortfolioGraph;
+
+
+import React, { useEffect,  } from "react";
 import _debounce from 'lodash.debounce';
 import { createChart } from 'lightweight-charts';
+
  
 
 const  LivePortfolioGraph = (props) => {
 
-const [width, setWidth] = useState(0);
-const [height, setHeight] = useState(0);
-const [zobe, setZobe] = useState([]);
+while(props.g.current.children.length > 2){
 
+props.g.current.removeChild(props.g.current.lastChild)
+                  
+};
 
-
-
-
-useEffect( ()=> {
-
-
-const handleResize = _debounce(() => {chart.applyOptions({width: props.g.current.clientWidth, height: props.g.current.clientHeight,    });  } ,100 ); 
-
-window.addEventListener("resize", handleResize); 
-
-
-const chart = createChart(props.g.current, {
-        width: width,
-        height: height,
-        layout: {
-            textColor: '#d1d4dc',
-            backgroundColor: '#141d27',
-        },
-        rightPriceScale: {
-            scaleMargins: {
-                top: 0.3,
-                bottom: 0.25,
-            },
-        },
-        timeScale: {
-            visible: true,
-        },
-        crosshair: {
-            vertLine: {
-                width: 5,
-                color: 'rgba(224, 227, 235, 0.1)',
-                style: 0,
-            },
-            horzLine: {
-                visible: false,
-                labelVisible: true,
-            },
-        },
-        localization: {
-            priceFormatter: price => {
-            const nf = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
-             return   nf.format(price)
-            },
-
-        },    
-        grid: {
-            vertLines: {
-                color: 'rgba(42, 46, 57, 0)',
-              
-            },
-            horzLines: {
-                color: 'rgba(42, 46, 57, 0)',
-           
-            },
-        },
-});
-
-
-
-var areaSeries = chart.addAreaSeries({
-topColor: '#0f7589',
-bottomColor: '#031636',
+const otherOptions = {
+topColor: "#0f7589",
+bottomColor: "#031636",
 lineColor: '#f4a11e',
 lineWidth: 2,
 crossHairMarkerVisible: false,
+}
 
-});
+const options = {
+    width: 0,
+    height: 0,
+    layout: {
+    textColor: "#d1d4dc",
+    backgroundColor: "#141d27",
+    },
+    rightPriceScale: {
+        scaleMargins: {
+            top: 0.3,
+            bottom: 0.25,
+        },
+    },
+    timeScale: {
+        visible: true,
+    },
+    crosshair: {
+        vertLine: {
+            width: 5,
+            color: 'rgba(224, 227, 235, 0.1)',
+            style: 0,
+        },
+        horzLine: {
+            visible: false,
+            labelVisible: true,
+        },
+    },
+    localization: {
+        priceFormatter: price => {
+        const nf = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
+         return   nf.format(price)
+        },
+
+    },    
+    grid: {
+        vertLines: {
+            color: 'rgba(42, 46, 57, 0)',
+            visible:true
+          
+        },
+        horzLines: {
+            color: 'rgba(42, 46, 57, 0)',
+       
+        },
+    },
+
+}
 
 
+const chart = React.useRef(createChart(props.g.current, options) ); 
 
-// Import Data via Live Listener from Firebase
+const areaSeries = React.useRef(chart.current.addAreaSeries(otherOptions) );
 
-// var firestore = firebase.firestore();
-
-// const docRef = firestore.collection("Security").doc("NetExposure");
-
-// //Live Listener 
-// docRef.onSnapshot(  (doc) => {
-
-// doc.data().finalData2.map( (obj) => {
-
-// Object.values(obj).map( (arr) => {  zobe.push({time: new Date(arr[0]).toISOString().split('T')[0], value:arr[1]}) } ) 
-
-areaSeries.setData([
+areaSeries.current.setData([
     { time: '2019-04-11', value: 80.01 },
     { time: '2019-04-12', value: 96.63 },
     { time: '2019-04-13', value: 76.64 },
@@ -115,225 +258,215 @@ areaSeries.setData([
     { time: '2019-04-28', value: 106.64 },
     { time: '2019-04-29', value: 121.89 },
     { time: '2019-04-30', value: 94.43 },
-]) 
+])   
 
 
-// });
+const renderCount = React.useRef(120);
 
 
-// });
+useEffect( ()=> {
+
+const handleResize = _debounce(() => {
+    
+chart.current.applyOptions({
+    width: props.g.current.clientWidth , 
+    height: props.g.current.clientHeight 
+});
+
+} ,10 ); 
 
 
-// const delay = ms => new Promise(res => setTimeout(res, ms));
-
-
-
-
-// var legend = document.createElement('div');
-// legend.classList.add('legend');
-// props.g.current.appendChild(legend);
-
-
-// var firstRow = document.createElement('span');
-// firstRow.classList.add("FirstRow");
-// firstRow.innerHTML = 'GAV $';
-
-// firstRow.style.color = 'white';
-
-
-// var firstRowPerc = document.createElement('div');
-// firstRowPerc.classList.add("FirstRowPerc");
-// firstRowPerc.innerHTML = 'N/A';
-// firstRowPerc.style.color = 'white';
-
-
-// var dateholder = document.createElement('div');
-// dateholder.classList.add("dateholder");
-// dateholder.innerHTML = '';
-
-
-// var GAV = props.GAV.current
-
-// var GavValue = document.createElement("div"); 
-// GavValue.classList.add("GavValue");
-// GavValue.style.color = "white"
-// GavValue.style.display = "inline-block"
-// GavValue.style.fontSize = "2rem"
-// GavValue.style.letterSpacing = "1px"
-// GavValue.style.fontFamily = "'Trebuchet MS',  Arial, sans-serif"
-
-
-// var DTD = document.createElement("span");
-// DTD.classList.add("DTD"); 
-// DTD.style.color = "white";
-// DTD.style.display= "inline-block"
-// DTD.style.paddingLeft = "15px"
-// DTD.style.fontFamily = "'Trebuchet MS',  Arial, sans-serif"
-
-
-// var GavChange = document.createElement("span")
-// GavChange.classList.add("GavChange"); 
-// GavChange.style.color = "white";
-// GavChange.style.display= "inline-block";
-// GavChange.style.fontFamily = "'Trebuchet MS',  Arial, sans-serif"
-// GavChange.style.paddingLeft = "15px";
-
-// var Gavtooltip = document.createElement("span");
-// Gavtooltip.classList.add("Gavtooltip");
-// Gavtooltip.style.display = "inline-block";
-// Gavtooltip.style.position ="absolute";
-// Gavtooltip.style.color = "white"; 
-// Gavtooltip.style.visibility = "hidden";
-// Gavtooltip.style.backgroundColor = "#11151f";
-
-// var tooltiptext = document.createElement("span");
-// tooltiptext.classList.add("tooltiptext");
-// tooltiptext.innerHTML = "DTD Change %"
-// tooltiptext.style.display = "inline-block";
-// tooltiptext.style.position ="absolute";
-// tooltiptext.style.color = "white"; 
-// tooltiptext.style.visibility = "hidden";
-// tooltiptext.style.backgroundColor = "#11151f";
-
-
-
-
-
-
-// GAV.appendChild(GavValue);
-// GAV.appendChild(DTD);
-// GAV.appendChild(GavChange);
-// GAV.appendChild(Gavtooltip);
-// GAV.appendChild(tooltiptext);
-
-// legend.appendChild(firstRow);
-// legend.appendChild(dateholder);
-// legend.appendChild(firstRowPerc);
-
-
-
-
-// const tootlipActivate = async ( ) => {
-
-// await delay(1300);
-
-// chart.subscribeCrosshairMove((param) => {
-// if (param.time) {
-//     const lastprice = areaSeries.Oe.Bi.Ae[areaSeries.Oe.Bi.Ae.length - 1].F
-//         const price = param.seriesPrices.get(areaSeries);
-//         const percenetage =  price / areaSeries.Oe.Bi.Ae[0].F * 100 -100;                  
-//         const nf = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
-//         var previousDayPrice = areaSeries.Oe.Bi.Ae[areaSeries.Oe.Bi.Ae.length - 2].F;
-//         var DChange =  lastprice - previousDayPrice 
-//         var DTDChange  =  DChange/lastprice*100
-//         var IncepDate = new Date (`${zobe[0].time["year"]} ${zobe[0].time["month"]} ${zobe[0].time["day"]}` ) 
-//         var LastDate =  new Date (`${zobe[zobe.length-1].time["year"]} ${zobe[zobe.length-1].time["month"]} ${zobe[zobe.length-1].time["day"]}` )
-//         var Diffrence = Math.abs(IncepDate -LastDate) 
-//         var daysinyear = 1000 * 60 * 60 * 24 ;
-//         var monthsinyear = 1000 * 60 * 60 * 24 *30.4167 
-//         var Yearsdif = 1000 * 60 * 60 * 24 *30.4167 *12
-//         var DiffrenceinDays = `${Math.round(Diffrence / daysinyear)} Days`
-//         var DiffrenceinMonths = `${Math.round(Diffrence / monthsinyear)} Months`
-//         var DiffrenceinYears = `${Math.round(Diffrence / Yearsdif)} Years`
-//         const bf = new Intl.NumberFormat('en-US' )
-
-//         firstRow.innerHTML = ` GAV  ${nf.format(price.toFixed(2))} `;
-//         firstRow.style.color = 'white';
-
-//         firstRowPerc.innerHTML = `${percenetage.toFixed(2)} %`
-
-//         dateholder.innerHTML = `${param.time.day}/${param.time.month} /${param.time.year}`
-//         dateholder.style.display = "inline-block";
-
-
-//         GavValue.innerHTML = nf.format(lastprice); 
-//         GavChange.innerHTML = bf.format(DChange);
-//         DTD.innerHTML = `${DTDChange.toFixed(3)}%`
-
-//         Gavtooltip.innerHTML = ` Last Update: ${zobe[zobe.length -1] .time.day}/${zobe[zobe.length -1] .time.month}/${zobe[zobe.length -1].time.year} `
-       
-// console.log( DiffrenceinDays , DiffrenceinMonths, DiffrenceinYears )
-
-//         // % Since incepton Graph
-//          if(percenetage.toString()[0] === "-"){
-//             firstRowPerc.style.color = "red";
-//         }
-//         else{
-//             firstRowPerc.style.color = "green"   ;
-//         }
-
-// // Day 2 Day Change
-//         if(DChange.toString()[0] === "-"){
-//             GavChange.style.color = "red";
-//         }
-//         else{
-//             GavChange.style.color = "green"    ;
-//         }
-// //  Day 2 Day Change %
-//         if(DTDChange.toString()[0] === "-"){
-//             DTD.style.color = "red";
-//         }
-//         else{
-//             DTD.style.color = "green"    ;
-//         }
-        
-//     }
-
-// else {
-
-// const lastprice = areaSeries.Oe.Bi.Ae[areaSeries.Oe.Bi.Ae.length - 1].F
-// const percenetage =  lastprice / areaSeries.Oe.Bi.Ae[0].F * 100 -100; 
-//     var previousDayPrice = areaSeries.Oe.Bi.Ae[areaSeries.Oe.Bi.Ae.length - 2].F;
-//     var DChange =  lastprice - previousDayPrice 
-//     var DTDChange  =  DChange/ lastprice * 100
-//     const nf = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' } )
-//     const bf = new Intl.NumberFormat('en-US' )
-
-//       firstRow.innerHTML = 'GAV ' +  nf.format(lastprice.toFixed(2));
-//       firstRow.style.color = 'white';
-
-//       firstRowPerc.innerHTML = `${percenetage.toFixed(2)} %`
-
-//     dateholder.innerHTML = ``
-//     dateholder.style.display = "none";
-
-
-
-
-//       if(percenetage.toString()[0] === "-"){
-//         firstRowPerc.style.color = "red";
-//     }
-//     else{
-//         firstRowPerc.style.color = "green"    ;
-//     }
-
-//   }
-// });
-
-// }
-
-// tootlipActivate();
-
+window.addEventListener("resize", handleResize); 
 
 
 // Clean Up
 return () => {
+
 window.removeEventListener('resize', handleResize);
 
 }
 
-}, [zobe])
-
+},[props.g.current.clientHeight, props.g.current.clientWidth])
 
 
 return (
+<>
+<div className="customization">
+
+<span>
+<input 
+id="colorpicker" 
+type="color" 
+defaultValue="#141d27"
+onChange={() => {
+    var selectedcolor = document.getElementById("colorpicker").value;
+
+    chart.current.applyOptions({ 
+        layout: { 
+            backgroundColor: selectedcolor, 
+        },
+         
+    }); 
+}} 
+ />
+
+ <p>
+    Background 
+  </p>
+
+</span>
+
+
+
+<span>
+<input 
+id="colorpicker1" 
+type="color" 
+defaultValue="#f4a11e"
+onChange={() => {
+    var selectedcolor = document.getElementById("colorpicker1").value
+    areaSeries.current.applyOptions({
+    lineColor: selectedcolor,
+}); 
+}} 
+ />
+
+ <p>
+    Line 
+  </p>
+
+  </span>
+
+
+
+<span>
+<input 
+id="colorpicker2" 
+type="color" 
+defaultValue='#0f7589'
+onChange={() => {
+    var selectedcolor = document.getElementById("colorpicker2").value
+    areaSeries.current.applyOptions({
+    topColor: selectedcolor,
+}); 
+}} 
+ />
+
+ <p>
+    Top 
+  </p>
+
+  </span>
+
+  
+
+<span>
+<input 
+id="colorpicker3" 
+type="color" 
+defaultValue='#031636'
+onChange={() => {
+    var selectedcolor = document.getElementById("colorpicker3").value
+    areaSeries.current.applyOptions({
+    bottomColor: selectedcolor,
+}); 
+}} 
+ />
+
+ <p>
+    Bottom 
+  </p>
+
+  </span>
+
+ 
+
+<span>
+<input 
+id="colorpicker4" 
+type="color" 
+defaultValue='#031636'
+onChange={() => {
+    var selectedcolor = document.getElementById("colorpicker4").value
+    chart.current.applyOptions({ 
+        layout: { 
+            textColor: selectedcolor, 
+        },
+         
+    }); 
+}} 
+ />
+
+ <p>
+    Text 
+  </p>
+
+  </span>
+  
+</div>
+
 
 <div style={{position:"relative", left:"5%", height:"100%", width:"100%", display:"none"}}>
 
+{console.log(`${renderCount.current ++} time(s)`)}
 </div>
 
-)
+</>
 
-}
+)}
 
-export default LivePortfolioGraph;
+export default React.memo(LivePortfolioGraph);
+
+
+
+
+  {/* <div className="customiza"> 
+
+      <p>
+    Currency
+  </p>
+
+<div className="select-div">
+      <select
+        className="exchange"
+        value={currency}
+        onChange={ (e) => { setCurrency(e.target.value) } }
+      >
+    <option value="USD" label="USD">USD</option>
+    <option value="EUR" label="EUR">EUR</option>
+    <option value="JPY" label="JPY">JPY</option>
+    <option value="GBP" label="GBP">GBP</option>
+    <option disabled>────────────────</option>
+    <option value="AED" label="AED">AED</option>
+    <option value="ANG" label="ANG">ANG</option>
+    <option value="ARS" label="ARS">ARS</option>
+    <option value="AUD" label="AUD">AUD</option>
+    <option value="BDT" label="BDT">BDT</option>
+    <option value="CAD" label="CAD">CAD</option>
+    <option value="CHF" label="CHF">CHF</option>
+    <option value="COP" label="COP">COP</option>
+
+    <option value="CNY" label="CNY">CNY</option>
+
+    <option value="EGP" label="EGP">EGP</option>
+    <option value="IDR" label="IDR">IDR</option>
+    <option value="INR" label="INR">INR</option>
+    <option value="JOD" label="JOD">JOD</option>
+    <option value="KWD" label="KWD">KWD</option>
+    <option value="LBP" label="LBP">LBP</option>
+    <option value="MAD" label="MAD">MAD</option>
+    <option value="NGN" label="NGN">NGN</option>
+    <option value="PKR" label="PKR">PKR</option>
+    <option value="PHP" label="PHP">PHP</option>
+    <option value="QAR" label="QAR">QAR</option>
+    <option value="RUB" label="RUB">RUB</option>
+    <option value="SAR" label="SAR">SAR</option>
+    <option value="SGD" label="SGD">SGD</option>
+    <option value="SLS" label="SLS">SLS</option>
+    <option value="TRY" label="TRY">TRY</option>
+
+      </select>
+    </div>
+
+
+</div> */}
