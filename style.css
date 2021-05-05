@@ -38,7 +38,8 @@ a {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(15, 175px);
-
+  /* grid-auto-rows: minmax(150px, auto); */
+  /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
 
   max-width: 2000px;
 }
@@ -67,6 +68,7 @@ a {
   grid-template-columns: repeat(14, 1fr);
   grid-template-rows: repeat(7, 1fr);
 }
+
 
 .landing-intro h2{
   font-family: Trebuchet MS,  Arial, sans-serif;
@@ -203,11 +205,12 @@ a {
 
 }
 
-.landing-intro3 .la3p{
+
+.landing-intro3 #customization{
   font-family: Trebuchet MS,  Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #c7c9d3;
-  font-size: 1.5rem;
+  font-size: 1.0rem;
  
   max-width: 750px;
   padding: 25px;
@@ -215,53 +218,24 @@ a {
   margin-left: 10px;
 
   grid-column: 1/8;
-  grid-row: 5/5;
-  
- 
-}
-
-.landing-intro3 .Ayre{
-  font-family: Trebuchet MS,  Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  color: #c7c9d3;
-  font-size: 1.5rem;
- 
-  max-width: 750px;
-  padding: 25px;
-  letter-spacing: 2px;
-  margin-left: 10px;
-
-  grid-column: 1/8;
-  grid-row: 5/5;
-  
- 
-}
-
-.FinancialChartIntro{
-  grid-column: 8/15;
-  grid-row:1/8;
-  max-width: 750px;
-  margin-bottom: 125px;
-  margin-top: 15px;
-  margin-right: 15px;
-}
-
-.customization{
-  font-family: Trebuchet MS,  Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  color: #c7c9d3;
-  font-size: 0.8rem;
- max-height: 175px;
-  max-width: 750px;
-  padding: 5px;
-  letter-spacing: 2px;
-  margin-left: 10px;
-  position: relative;
-  top: -20px;
+  grid-row: 4/8;
   -webkit-animation: fadeEffect 1s;
   animation: fadeEffect 1s;
   
  
+}
+
+#customization p{
+  display: inline-block;
+}
+
+.FinancialChartIntro{
+  grid-column: 8/15;
+  grid-row:2/8;
+  max-width: 750px;
+  margin-top: 15px;
+  margin-right: 15px;
+  margin-bottom: 15px;
 }
 
 /* Fade in tabs */

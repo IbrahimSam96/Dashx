@@ -117,14 +117,19 @@ const Main = (props) => {
           Easily colllaborate with your peers 
           to create up-to date charts
            using google sheets.
+          
         </p>
         
-       <div  className="GoogleSheets-Logo">
+       <div  className="GoogleSheets-Logo"> 
+       <a href="https://docs.google.com/spreadsheets/d/1eK264_It9ezV8g1Ah_PROiOiOMkKg3KYszvcNHbjso0/edit#gid=0" target="
+       _blank"> 
         <Image
         src="/google-sheets.svg"
         alt="Google-Sheets"
         width={100} height={100} layout="responsive" 
+        
         />
+        </a>
         </div>
 
         <div className="GoogleSheetsExample">
@@ -138,15 +143,14 @@ const Main = (props) => {
       <h2>
         Display Stunning Financial Charts
       </h2>
-        <span className="la3p">
-       <p> 
-          Create & customize lightweight charts  
-        </p>
-        </span>
+
+        <div id="customization">
+          
+        </div>
 
         <div ref={g} className="FinancialChartIntro" > 
 
-        <LivePortfolioGraph g={g}  />
+        <LivePortfolioGraph g={g} m={m} />
 
         </div> 
 

@@ -164,7 +164,7 @@
 import React, { useEffect,  } from "react";
 import _debounce from 'lodash.debounce';
 import { createChart } from 'lightweight-charts';
-
+import ReactDOM from "react-dom"
  
 
 const  LivePortfolioGraph = (props) => {
@@ -261,7 +261,7 @@ areaSeries.current.setData([
 ])   
 
 
-const renderCount = React.useRef(120);
+const renderCount = React.useRef(0);
 
 
 useEffect( ()=> {
@@ -289,10 +289,151 @@ window.removeEventListener('resize', handleResize);
 },[props.g.current.clientHeight, props.g.current.clientWidth])
 
 
+
+    function Chnageme() {
+
+        var selectedcolor = document.getElementById("colorpicker").value;
+        
+        return  chart.current.applyOptions({ 
+            layout: { 
+                backgroundColor: selectedcolor, 
+            },
+             
+        }); 
+        
+        }
+
+    function Chnageme1() {
+
+        var selectedcolor = document.getElementById("colorpicker1").value
+        areaSeries.current.applyOptions({
+        lineColor: selectedcolor,
+    }); 
+            
+            }
+
+    function Chnageme2() {
+
+        var selectedcolor = document.getElementById("colorpicker2").value
+        areaSeries.current.applyOptions({
+        topColor: selectedcolor,
+    }); 
+                    
+                    } 
+                    
+    function Chnageme3() {
+            var selectedcolor = document.getElementById("colorpicker3").value
+            areaSeries.current.applyOptions({
+             topColor: selectedcolor,
+                    }); 
+                                    
+            }   
+
+     function Chnageme4() {
+                var selectedcolor = document.getElementById("colorpicker4").value
+            chart.current.applyOptions({ 
+                layout: { 
+                    textColor: selectedcolor, 
+                },
+                 
+            });              
+                }    
+                 
+ const element = 
+ 
+        
+<>
+        <span>
+        <input 
+        id="colorpicker" 
+        type="color" 
+        defaultValue="#141d27"
+        onChange={Chnageme} 
+         />
+        
+         <p>
+            Background 
+          </p>
+        
+        </span>
+        
+        <span>
+        <input 
+        id="colorpicker1" 
+        type="color" 
+        defaultValue="#f4a11e"
+        onChange={Chnageme1} 
+         />
+        
+         <p>
+            Line 
+          </p>
+        
+          </span>
+
+        <br/> 
+        
+        <span>
+        <input 
+        id="colorpicker2" 
+        type="color" 
+        defaultValue='#0f7589'
+        onChange={Chnageme2} 
+         />
+        
+         <p>
+            Top 
+          </p>
+        
+          </span>
+        
+        
+        <span>
+        <input 
+        id="colorpicker3" 
+        type="color" 
+        defaultValue='#031636'
+        onChange={Chnageme3} 
+         />
+        
+         <p>
+            Bottom 
+          </p>
+        
+          </span>
+        <br/>
+        
+        <span>
+        <input 
+        id="colorpicker4" 
+        type="color" 
+        defaultValue='#031636'
+        onChange={Chnageme4} 
+         />
+        
+         <p>
+            Text 
+          </p>
+        
+          </span>
+</>
+     
+        ;
+        
+ReactDOM.render(
+element,
+document.getElementById("customization")
+);
+
+
+
+
+
+
 return (
 <>
-<div className="customization">
-
+{/* <div className="customization"> */}
+{/* 
 <span>
 <input 
 id="colorpicker" 
@@ -402,8 +543,8 @@ onChange={() => {
   </p>
 
   </span>
-  
-</div>
+   */}
+{/* </div> */}
 
 
 <div style={{position:"relative", left:"5%", height:"100%", width:"100%", display:"none"}}>
