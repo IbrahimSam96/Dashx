@@ -26,7 +26,7 @@ a {
     display: grid;
       grid-template-columns: repeat(14, 1fr);
       grid-template-rows: repeat(15, 1fr);
-     
+     max-width: 2600px;
 }
 
 
@@ -261,6 +261,176 @@ display: inline-block;
   }
 
 
+.getStarted{
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: white;
+  font-size: 3rem;
+  letter-spacing: 2px;
+
+  max-width: 750px;
+  padding: 45px;
+
+ 
+  grid-column: 6/11;
+  grid-row: 15/15;
+}
+
+.getStarted a:hover{
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+  text-shadow: 0 0 10px #fff;  
+}
+
+/* create.js  */
+
+.createPage{
+  grid-column: 1/15;
+  grid-row: 1/16;
+
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(15, 175px);
+  /* grid-auto-rows: minmax(150px, auto); */
+  /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+  max-width: 2600px;
+}
+
+.WorkSpace{
+  grid-column: 2/12;
+  grid-row: 2/16;
+
+  background-color: #F43B5F;
+}
+
+.designBar{
+grid-column: 1/1;
+grid-row: 2/4;
+display: grid;
+grid-template-columns: repeat(1, 1fr);
+grid-template-rows: repeat(3, 1fr);
+grid-gap: 10px;
+
+padding-left: 5px;
+max-width: 100px;
+background-color: #000428;
+box-shadow: rgba(0,0,0,.5) 0px 0px 20px 0px; 
+
+z-index: 5000;
+}
+
+.designBar1{
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #c7c9d3;
+  font-size: 1.0rem;
+ 
+  padding: 10px;
+  letter-spacing: 2px;
+  margin-left: 10px;
+
+  grid-column: 1/1;
+  grid-row: 1/1;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+.designBar1 .MuiSvgIcon-root{
+  color: #F43B5F;
+  margin-top: 20px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.designBar1 .MuiSvgIcon-root:hover{
+  -webkit-transform: scale(1.05);
+  transform: scale(1.25);
+}
+
+#designBar1Options{
+display: none;
+
+-webkit-animation: fadeEffect 1s;
+animation: fadeEffect 1s;
+position: absolute;
+/* 
+top: -120px;
+left: 125px; */
+
+top: 175px;
+left: 105px;
+
+
+
+background-color: #000428;
+box-shadow: rgba(0,0,0,.5) 0px 0px 20px 0px; 
+height: 55px;
+width: 125px;
+z-index: 2000;
+
+}
+
+
+.designBar2{
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #c7c9d3;
+  font-size: 1.0rem;
+ 
+  padding: 10px;
+  letter-spacing: 2px;
+  margin-left: 10px;
+
+  grid-column: 1/1;
+  grid-row: 2/2;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+.designBar2 .MuiSvgIcon-root{
+  color: #F43B5F;
+  margin-top: 20px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.designBar2 .MuiSvgIcon-root:hover{
+  -webkit-transform: scale(1.05);
+  transform: scale(1.25);
+}
+
+.designBar3{
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #c7c9d3;
+  font-size: 1.0rem;
+ 
+  padding: 10px;
+  letter-spacing: 2px;
+  margin-left: 5px;
+
+  grid-column: 1/1;
+  grid-row: 3/3;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+.designBar3 .MuiSvgIcon-root{
+  color: #F43B5F;
+  margin-top: 20px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.designBar3 .MuiSvgIcon-root:hover{
+  -webkit-transform: scale(1.05);
+  transform: scale(1.25);
+}
+
+
+
+/* create.js ends here */
+
 /* Navigation Bar.js  */
 .Navbar{
         grid-column: 1/15;
@@ -271,7 +441,7 @@ display: inline-block;
         grid-template-columns: repeat(7, 1fr);
         grid-template-rows: repeat(1, 75px);
         grid-gap: 10px;
-        
+        z-index: 5000;
         background-color: #000428;
         
     

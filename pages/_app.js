@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }) {
 <>
 
 <AuthProvider>
+    
 <div className="Main">
 
 <Head>
@@ -23,6 +24,7 @@ function MyApp({ Component, pageProps }) {
 <Component {...pageProps} />
 
 </div>
+
 </AuthProvider>
 
 </>

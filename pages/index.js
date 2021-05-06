@@ -12,6 +12,7 @@ import { firebaseAdmin } from "../firebaseAdmin";
 import LineGraph from "../Components/Linegraph"
 import BarGraph from "../Components/GoogleSheets"
 import _debounce from 'lodash.debounce';
+import Link from 'next/link'
 
 
 
@@ -70,7 +71,6 @@ const Main = (props) => {
 
 
   const g = useRef(null);
-  const m = useRef(null);
 
 
   return (
@@ -150,12 +150,20 @@ const Main = (props) => {
 
         <div ref={g} className="FinancialChartIntro" > 
 
-        <LivePortfolioGraph g={g} m={m} />
+        <LivePortfolioGraph g={g}  />
 
         </div> 
 
     </div>
 
+    <div className="getStarted">
+
+      <Link href= "/create">
+      <a>Get Started</a>
+      </Link>
+
+
+     </div>
 
          {/* <video playsInline autoPlay loop muted className="landing-video">
 
