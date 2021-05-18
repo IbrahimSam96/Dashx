@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HightchartsReact from "highcharts-react-official";
 
-
-
-
 const LineGraph = () => {
 
 const [option, setOption] = useState({ 
@@ -17,7 +14,6 @@ const [option, setOption] = useState({
             fontWeight:"bold",
             fontSize:"1.5rem",
         }
-
     },
     legend: {
         enabled: true,
@@ -72,14 +68,11 @@ const [option, setOption] = useState({
 })
 
 
-
 const renderHighChartCard = (
 <HightchartsReact
  highcharts={Highcharts}
 constructorType={'chart'}
-options={option}
-
-/>
+options={option} /> 
 ); 
 
 

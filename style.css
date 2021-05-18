@@ -6,7 +6,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   
-   background-color:  #004e92;
+   /* background-color:  #004e92; */
 
   background: linear-gradient(#05355f,#004e92);
 
@@ -264,7 +264,7 @@ display: inline-block;
 .getStarted{
   font-family: Trebuchet MS,  Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  color: white;
+  color: #c7c9d3;
   font-size: 3rem;
   letter-spacing: 2px;
 
@@ -297,10 +297,12 @@ display: inline-block;
 }
 
 .WorkSpace{
-  grid-column: 2/12;
-  grid-row: 2/16;
+grid-column: 2/12;
+grid-row: 2/16;
 
-  background-color: #F43B5F;
+
+box-shadow: rgba(0,0,0,.5) 0px 0px 20px 0px;
+border: 2px solid #c7c9d3;
 }
 
 .designBar{
@@ -310,6 +312,9 @@ display: grid;
 grid-template-columns: repeat(1, 1fr);
 grid-template-rows: repeat(3, 1fr);
 grid-gap: 10px;
+
+
+
 
 padding-left: 5px;
 max-width: 100px;
@@ -343,20 +348,18 @@ z-index: 5000;
 }
 
 .designBar1 .MuiSvgIcon-root:hover{
-  -webkit-transform: scale(1.05);
+  -webkit-transform: scale(1.25);
   transform: scale(1.25);
 }
 
 #designBar1Options{
 display: none;
-
 -webkit-animation: fadeEffect 1s;
 animation: fadeEffect 1s;
-position: absolute;
-/* 
-top: -120px;
-left: 125px; */
 
+
+
+position: absolute;
 top: 175px;
 left: 105px;
 
@@ -364,11 +367,32 @@ left: 105px;
 
 background-color: #000428;
 box-shadow: rgba(0,0,0,.5) 0px 0px 20px 0px; 
-height: 55px;
-width: 125px;
+height: 230px;
+width: 155px;
 z-index: 2000;
 
 }
+
+
+#designBar1Options p{
+  display: inline;
+  white-space: nowrap;
+  padding: 20px;
+
+
+  color: #c7c9d3;
+  font-family: Trebuchet MS,  Arial, sans-serif;
+}
+
+#designBar1Options p:hover{
+  text-shadow: 0 0 10px #fff;   
+}
+
+#designBar1Options .MuiSvgIcon-root:hover{
+  -webkit-transform: scale(1.15);
+  transform: scale(1.15);
+}
+
 
 
 .designBar2{
@@ -395,9 +419,274 @@ z-index: 2000;
 }
 
 .designBar2 .MuiSvgIcon-root:hover{
-  -webkit-transform: scale(1.05);
+  -webkit-transform: scale(1.25);
   transform: scale(1.25);
 }
+
+
+
+div .modal-content{
+  background-color: #000428;
+  box-shadow: rgba(0,0,0,.5) 0px 0px 20px 0px; 
+  color: white;
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  
+
+  top: 100px;
+  left: -125px;
+  width: 850px!important;
+  max-width: 1500px;
+}
+
+ div .modal-header{ 
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   grid-template-rows: repeat(1, 75px);
+
+
+}
+
+.inputtitle{
+  grid-column: 1/1;
+  grid-row: 1/1;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+}
+.inputtitle:focus{
+  /* box-shadow: #F43B5F 0px 0px 20px 0px;  */
+  border: 5px solid #F43B5F; 
+ transition: 2s;
+}
+
+  div .modal-header .MuiSvgIcon-root:nth-child(1){
+      grid-column: 4/4;
+      align-self: center; 
+      justify-self: end;
+      font-size: 3.5rem;
+      cursor: pointer;
+    }
+
+div .modal-header .MuiSvgIcon-root:nth-child(1):hover{
+color: rgb(36, 168, 36)!important;
+
+}
+
+ div .modal-header .MuiSvgIcon-root:nth-child(2){
+   grid-column: 5/5;
+   align-self: start; 
+   font-size: 2.5rem;
+   cursor: pointer;
+ }
+
+ div .modal-header .MuiSvgIcon-root:nth-child(2):hover{
+  color: #F43B5F!important;
+
+  }
+
+
+div .modal-body{ 
+   display: grid;
+   grid-template-columns: repeat(6, 1fr);
+   grid-template-rows: repeat(8, 85px);
+ 
+  }
+
+
+div .modal-body  .anticon:hover{
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+  color: whitesmoke!important;
+
+
+}
+
+
+.modal-body .anticon:nth-child(1){
+grid-column: 1/1;
+grid-row: 1/1;
+
+justify-self: center;
+font-size: 3.5rem;
+
+}
+
+.modal-body .anticon:nth-child(2){
+grid-column: 2/2;
+grid-row: 1/1;
+
+justify-self: center;
+font-size: 3.5rem;
+
+}
+
+.modal-body .anticon:nth-child(3){
+  grid-column: 3/3;
+  grid-row: 1/1;
+  
+  justify-self: center;
+  font-size: 3.5rem;
+  
+  }
+  
+.modal-body .anticon:nth-child(4){
+  grid-column: 4/4;
+  grid-row: 1/1;
+  
+  justify-self: center;
+  font-size: 3.5rem;
+  
+  }
+
+.GraphArea{
+    grid-column: 1/5;
+    grid-row: 2/9;
+    align-self: center;
+    
+    }
+  
+.GraphOptions{
+  grid-column: 5/5;
+  grid-row: 2/2;
+ 
+  justify-content: center;
+  align-self: center;
+}
+
+.GraphOptions p{
+  display: inline;
+  white-space: nowrap;
+  font-size: 1.2rem;
+  padding: 15px;
+  color: #c7c9d3;
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  cursor: pointer;
+justify-content: center;
+  align-self: center;
+
+  margin-left: 10px;
+}
+
+.GraphOptions p:hover{
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+  color: whitesmoke!important;
+}
+
+.GraphOptions1{
+  grid-column: 6/6;
+  grid-row: 2/2;
+  justify-content: center;
+  align-self: center;
+}
+
+.GraphOptions1 p{
+  display: inline;
+  white-space: nowrap;
+  font-size: 1.2rem;
+  padding: 15px;
+  color: #c7c9d3;
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  cursor: pointer;
+justify-content: center;
+  align-self: center;
+
+  margin-left: 10px;
+}
+
+.GraphOptions1 p:hover{
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+  color: whitesmoke!important;
+}
+
+.GraphCheckboxes{
+  grid-column: 5/7;
+  grid-row: 3/9;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+.GraphCheckboxes .MuiCheckbox-root{
+  color: #F43B5F;
+cursor: pointer;
+}
+
+.GraphCheckboxes p{
+  display: inline;
+  white-space: nowrap;
+  font-size: 1.0rem;
+  padding: 10px;
+  color: #c7c9d3;
+  font-family: Trebuchet MS,  Arial, sans-serif;
+}
+
+.DataBoxheader{ 
+   display: grid;
+   grid-template-columns: repeat(8, 1fr);
+   grid-template-rows: repeat(1, 75px);
+
+}
+
+.DataBoxheader1{
+  grid-column:1/1;
+  grid-row: 1/1;
+ cursor:pointer;
+ align-self: center;
+ 
+}
+
+.DataBoxheader1:hover{
+  text-shadow: 0 0 10px #fff; 
+}
+
+.DataBoxheader2{
+  grid-column:1/1;
+  grid-row: 1/1;
+   cursor:pointer;
+   align-self: end;
+}
+
+.DataBoxheader2:hover{
+  text-shadow: 0 0 10px #fff; 
+}
+
+.DataBoxheader .MuiSvgIcon-root{
+  grid-column: 8/9;
+  align-self: start; 
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+
+.DataBoxbody{
+  display: grid;
+  grid-template-columns: repeat(9, 95px);
+  grid-template-rows: repeat(8, 85px);
+  border-top: 1px solid #ccc;
+
+}     
+
+.DataBoxbody1{
+  grid-column:1/6;
+  grid-row: 2/9;
+  overflow-y: scroll;
+}
+
+
+.inputboxes{
+  padding: 10px 0px;
+  margin: 10px 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+}
+
 
 .designBar3{
   font-family: Trebuchet MS,  Arial, sans-serif;
@@ -423,9 +712,13 @@ z-index: 2000;
 }
 
 .designBar3 .MuiSvgIcon-root:hover{
-  -webkit-transform: scale(1.05);
+  -webkit-transform: scale(1.25);
   transform: scale(1.25);
 }
+
+
+
+
 
 
 
@@ -522,7 +815,7 @@ z-index: 2000;
    right: 75px;
    width: 150%;
    max-width: 300px;
-   margin-top: 18px;
+   margin-top: 5px;
    background-color: #000428;
    
    
@@ -1063,6 +1356,38 @@ border-color: #000428;
 
 }
 
+.SignuperrorMessageNotification2{
+  grid-column: 10/13  ;
+  grid-row: 1/1;
+  color:whitesmoke;
+  font-weight: bold;
+  font-size: small;
+  background: rgba(250, 6, 6, 0.5);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
+ z-index: 200990;
+ 
+}
+.SignuperrorMessageNotification2 h2,p{
+ padding: 20px;
+ text-align: left;       
+ font-family: Trebuchet MS,  Arial, sans-serif;
+
+}
+.SignuperrorMessageNotification2 a {
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  top: 15px;
+  left: 10px;
+}
+.SignuperrorMessageNotification2:hover{
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+
+}
 /*  */
 
   /*Hide ScrollBar*/
@@ -1071,6 +1396,7 @@ border-color: #000428;
     background: transparent; /* make scrollbar transparent */
   }
   
+
   /* Dropdown for Currency */
   
   .exchange{

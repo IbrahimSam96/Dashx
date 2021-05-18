@@ -416,9 +416,7 @@ window.removeEventListener('resize', handleResize);
           </p>
         
           </span>
-</>
-     
-        ;
+</> ;
         
 ReactDOM.render(
 element,
@@ -432,121 +430,6 @@ document.getElementById("customization")
 
 return (
 <>
-{/* <div className="customization"> */}
-{/* 
-<span>
-<input 
-id="colorpicker" 
-type="color" 
-defaultValue="#141d27"
-onChange={() => {
-    var selectedcolor = document.getElementById("colorpicker").value;
-
-    chart.current.applyOptions({ 
-        layout: { 
-            backgroundColor: selectedcolor, 
-        },
-         
-    }); 
-}} 
- />
-
- <p>
-    Background 
-  </p>
-
-</span>
-
-
-
-<span>
-<input 
-id="colorpicker1" 
-type="color" 
-defaultValue="#f4a11e"
-onChange={() => {
-    var selectedcolor = document.getElementById("colorpicker1").value
-    areaSeries.current.applyOptions({
-    lineColor: selectedcolor,
-}); 
-}} 
- />
-
- <p>
-    Line 
-  </p>
-
-  </span>
-
-
-
-<span>
-<input 
-id="colorpicker2" 
-type="color" 
-defaultValue='#0f7589'
-onChange={() => {
-    var selectedcolor = document.getElementById("colorpicker2").value
-    areaSeries.current.applyOptions({
-    topColor: selectedcolor,
-}); 
-}} 
- />
-
- <p>
-    Top 
-  </p>
-
-  </span>
-
-  
-
-<span>
-<input 
-id="colorpicker3" 
-type="color" 
-defaultValue='#031636'
-onChange={() => {
-    var selectedcolor = document.getElementById("colorpicker3").value
-    areaSeries.current.applyOptions({
-    bottomColor: selectedcolor,
-}); 
-}} 
- />
-
- <p>
-    Bottom 
-  </p>
-
-  </span>
-
- 
-
-<span>
-<input 
-id="colorpicker4" 
-type="color" 
-defaultValue='#031636'
-onChange={() => {
-    var selectedcolor = document.getElementById("colorpicker4").value
-    chart.current.applyOptions({ 
-        layout: { 
-            textColor: selectedcolor, 
-        },
-         
-    }); 
-}} 
- />
-
- <p>
-    Text 
-  </p>
-
-  </span>
-   */}
-{/* </div> */}
-
-
 <div style={{position:"relative", left:"5%", height:"100%", width:"100%", display:"none"}}>
 
 {console.log(`${renderCount.current ++} time(s)`)}

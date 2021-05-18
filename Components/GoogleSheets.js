@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HightchartsReact from "highcharts-react-official";
-import data from "highcharts/modules/data"
+import data from "highcharts/modules/data";
+
 
 if (typeof Highcharts === 'object') {
     data(Highcharts); // Execute the data module
-  }
-  
 
+}
 
 const BarGraph = () => {
+
 
 const [option, setOption] = useState({ 
 
@@ -56,7 +57,6 @@ const [option, setOption] = useState({
         startColumn: 0,
         endColumn: 1,
         startRow: 0,
-
     },
     series: [{
         name:"",
@@ -71,8 +71,6 @@ const [option, setOption] = useState({
       
 })
 
-
-
 const renderHighChartCard = (
 <HightchartsReact
  highcharts={Highcharts}
@@ -81,7 +79,6 @@ options={option}
 
 />
 ); 
-
 
     return (
 
