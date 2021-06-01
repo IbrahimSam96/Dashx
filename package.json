@@ -29,6 +29,7 @@
     "react-draggable": "^4.4.3",
     "react-github-login-button": "^1.0.1",
     "react-google-button": "^0.7.2",
-    "react-resizable": "^1.11.1"
+    "react-resizable": "^1.11.1",
+    "react-rnd": "^10.3.2"
   }
 }

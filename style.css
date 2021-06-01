@@ -261,12 +261,7 @@ display: inline-block;
   }
 
 
-.getStarted{
-  font-family: Trebuchet MS,  Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  color: #c7c9d3;
-  font-size: 3rem;
-  letter-spacing: 2px;
+.getStarted {
 
   max-width: 750px;
   padding: 45px;
@@ -274,6 +269,16 @@ display: inline-block;
  
   grid-column: 6/11;
   grid-row: 15/15;
+}
+
+.getStarted a{
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #c7c9d3;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .getStarted a:hover{
@@ -290,9 +295,8 @@ display: inline-block;
 
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(15, 175px);
-  /* grid-auto-rows: minmax(150px, auto); */
-  /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+  grid-template-rows: repeat(10, 175px);
+
   max-width: 2600px;
 }
 
@@ -303,14 +307,52 @@ grid-row: 2/16;
 
 box-shadow: rgba(0,0,0,.5) 0px 0px 20px 0px;
 border: 2px solid #c7c9d3;
+
+display: grid;
+grid-template-columns: repeat(12, 1fr);
+grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
 }
+
+#createdGraph{
+  grid-column: 2/6;
+  grid-row: 2/6;
+}
+
+#createdGraph:after { 
+  content: " "; 
+  display: block;
+  clear: both;
+} 
+
+.createdText{
+  grid-row: 1/1;
+  grid-column: 2/4;
+} 
+
+
+.react-draggable:hover{
+  border: 2px solid #F43B5F;
+}
+
+.react-draggable .MuiSvgIcon-root{
+  visibility: hidden;
+}
+
+.react-draggable:hover .MuiSvgIcon-root{
+  visibility:visible;
+}
+
+ .react-draggable .MuiSvgIcon-root:nth-child(1):hover{
+color: #F43B5F!important;
+ }
+
 
 .designBar{
 grid-column: 1/1;
-grid-row: 2/4;
+grid-row: 2/5;
 display: grid;
 grid-template-columns: repeat(1, 1fr);
-grid-template-rows: repeat(3, 1fr);
+grid-template-rows: repeat(4, 1fr);
 grid-gap: 10px;
 
 
@@ -329,15 +371,18 @@ z-index: 5000;
   -webkit-font-smoothing: antialiased;
   color: #c7c9d3;
   font-size: 1.0rem;
- 
-  padding: 10px;
   letter-spacing: 2px;
-  margin-left: 10px;
-
-  grid-column: 1/1;
-  grid-row: 1/1;
   -webkit-animation: fadeEffect 1s;
   animation: fadeEffect 1s;
+
+
+
+  padding: 10px;
+  margin-left: 10px;
+align-self: center;
+  grid-column: 1/1;
+  grid-row: 1/1;
+
 }
 
 .designBar1 .MuiSvgIcon-root{
@@ -400,15 +445,17 @@ z-index: 2000;
   -webkit-font-smoothing: antialiased;
   color: #c7c9d3;
   font-size: 1.0rem;
- 
-  padding: 10px;
   letter-spacing: 2px;
-  margin-left: 10px;
-
-  grid-column: 1/1;
-  grid-row: 2/2;
   -webkit-animation: fadeEffect 1s;
   animation: fadeEffect 1s;
+
+
+  padding: 10px;
+  margin-left: 10px;
+  grid-column: 1/1;
+  grid-row: 2/2;
+  align-self: center;;
+
 }
 
 .designBar2 .MuiSvgIcon-root{
@@ -612,7 +659,7 @@ justify-content: center;
 }
 
 .GraphCheckboxes .MuiCheckbox-root{
-  color: #F43B5F;
+color: #F43B5F;
 cursor: pointer;
 }
 
@@ -625,6 +672,8 @@ cursor: pointer;
   font-family: Trebuchet MS,  Arial, sans-serif;
 }
 
+
+/* Data Modal */
 .DataBoxheader{ 
    display: grid;
    grid-template-columns: repeat(8, 1fr);
@@ -632,11 +681,13 @@ cursor: pointer;
 
 }
 
+
+
 .DataBoxheader1{
   grid-column:1/1;
   grid-row: 1/1;
  cursor:pointer;
- align-self: center;
+ align-self: flex-start;
  
 }
 
@@ -648,6 +699,7 @@ cursor: pointer;
   grid-column:1/1;
   grid-row: 1/1;
    cursor:pointer;
+white-space: nowrap;
    align-self: end;
 }
 
@@ -658,6 +710,7 @@ cursor: pointer;
 .DataBoxheader .MuiSvgIcon-root{
   grid-column: 8/9;
   align-self: start; 
+  justify-self: flex-end;
   font-size: 2.5rem;
   cursor: pointer;
 }
@@ -666,10 +719,20 @@ cursor: pointer;
 .DataBoxbody{
   display: grid;
   grid-template-columns: repeat(9, 95px);
-  grid-template-rows: repeat(8, 85px);
+  grid-template-rows: repeat(9, 85px);
   border-top: 1px solid #ccc;
 
-}     
+}    
+
+.inputseriestitle{
+  grid-column: 1/4;
+  grid-row: 1/1;
+  padding: 5px 10px;
+  margin: 25px 25px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
 .DataBoxbody1{
   grid-column:1/6;
@@ -680,7 +743,7 @@ cursor: pointer;
 
 .inputboxes{
   padding: 10px 0px;
-  margin: 10px 10px;
+  margin: 15px 25px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -693,15 +756,17 @@ cursor: pointer;
   -webkit-font-smoothing: antialiased;
   color: #c7c9d3;
   font-size: 1.0rem;
- 
-  padding: 10px;
   letter-spacing: 2px;
-  margin-left: 5px;
-
-  grid-column: 1/1;
-  grid-row: 3/3;
   -webkit-animation: fadeEffect 1s;
   animation: fadeEffect 1s;
+
+
+  padding: 10px;
+  margin-left: 5px;
+  grid-column: 1/1;
+  grid-row: 3/3;
+  align-self: center;
+
 }
 
 .designBar3 .MuiSvgIcon-root{
@@ -718,8 +783,113 @@ cursor: pointer;
 
 
 
+.designBar4{
+  font-family: Trebuchet MS,  Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #c7c9d3;
+  font-size: 1.0rem;
+  letter-spacing: 2px;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
 
 
+  padding: 10px;
+  margin-left: 5px;
+  grid-column: 1/1;
+  grid-row: 4/4;
+  align-self: center;
+}
+
+.designBar4 .MuiSvgIcon-root{
+  color: #F43B5F;
+  margin-top: 20px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.designBar4 .MuiSvgIcon-root:hover{
+  -webkit-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+
+/* Text Modal */
+.TextBoxheader{ 
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(1, 75px);
+
+}
+
+
+
+    
+.TextBoxheader .MuiSvgIcon-root:nth-child(1){
+  grid-column: 9/9;
+  grid-row: 1/1;
+  align-self: start; 
+  justify-self: flex-end;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+.TextBoxheader .MuiSvgIcon-root:nth-child(1):hover{
+  color: #f43b5f !important;
+}
+
+.TextBoxheader .MuiSvgIcon-root:nth-child(2){
+  grid-column: 8/9;
+  grid-row: 1/1;
+  align-self: start; 
+  justify-self: end;
+  font-size: 3.5rem;
+  cursor: pointer;
+}
+.TextBoxheader .MuiSvgIcon-root:nth-child(2):hover{
+  color: green !important;
+}
+
+.TextBoxbody{
+  display: grid;
+  grid-template-columns: repeat(9, 95px);
+  grid-template-rows: repeat(2, 125px);
+  border-top: 1px solid #ccc;
+
+}
+
+
+
+.TextBoxbody .textInput{
+  grid-column: 1/6;
+  grid-row: 1/3;
+  padding: 15px 10px;
+  margin: 25px 25px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.TextBoxbody .textInput2{
+  grid-column: 6/11;
+  grid-row: 1/1;
+align-self: center;
+
+}
+
+.TextBoxbody p{ 
+  display: inline-block;
+  white-space: nowrap;
+}
+ 
+.TextBoxbody .textInput3{
+grid-column: 6/11;
+  grid-row: 2/3;
+align-self: center;
+
+}
+.TextBoxbody .MuiCheckbox-root{
+  color: #F43B5F;
+  cursor: pointer;
+  }
 
 
 /* create.js ends here */

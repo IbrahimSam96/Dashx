@@ -1,166 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import _debounce from 'lodash.debounce';
-// import { createChart } from 'lightweight-charts';
- 
-
-// const  LivePortfolioGraph = (props) => {
-
-// const otherOptions = {
-// topColor: props.topColor,
-// bottomColor: props.bottomColor,
-// lineColor: props.lineColor,
-// lineWidth: 2,
-// crossHairMarkerVisible: false,
-// }
-
-// const options = {
-//     width: 0,
-//     height: 0,
-//     layout: {
-//     textColor: props.textColor,
-//     backgroundColor: props.backgroundColor,
-//     },
-//     rightPriceScale: {
-//         scaleMargins: {
-//             top: 0.3,
-//             bottom: 0.25,
-//         },
-//     },
-//     timeScale: {
-//         visible: true,
-//     },
-//     crosshair: {
-//         vertLine: {
-//             width: 5,
-//             color: 'rgba(224, 227, 235, 0.1)',
-//             style: 0,
-//         },
-//         horzLine: {
-//             visible: false,
-//             labelVisible: true,
-//         },
-//     },
-//     localization: {
-//         priceFormatter: price => {
-//         const nf = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
-//          return   nf.format(price)
-//         },
-
-//     },    
-//     grid: {
-//         vertLines: {
-//             color: 'rgba(42, 46, 57, 0)',
-//             visible:true
-          
-//         },
-//         horzLines: {
-//             color: 'rgba(42, 46, 57, 0)',
-       
-//         },
-//     },
-
-// }
-
-
-// const chart = React.useRef(createChart(props.g.current, options) );
-
-// var areaSeries = React.useRef(chart.current.addAreaSeries(otherOptions) );
-    
-//     areaSeries.current.setData([
-//         { time: '2019-04-11', value: 80.01 },
-//         { time: '2019-04-12', value: 96.63 },
-//         { time: '2019-04-13', value: 76.64 },
-//         { time: '2019-04-14', value: 81.89 },
-//         { time: '2019-04-15', value: 74.43 },
-//         { time: '2019-04-16', value: 80.01 },
-//         { time: '2019-04-17', value: 96.63 },
-//         { time: '2019-04-18', value: 76.64 },
-//         { time: '2019-04-19', value: 81.89 },
-//         { time: '2019-04-20', value: 74.43 },
-    
-//         { time: '2019-04-21', value: 82.01 },
-//         { time: '2019-04-22', value: 92.63 },
-//         { time: '2019-04-23', value: 93.64 },
-//         { time: '2019-04-24', value: 95.89 },
-//         { time: '2019-04-25', value: 84.43 },
-//         { time: '2019-04-26', value: 90.01 },
-//         { time: '2019-04-27', value: 96.63 },
-//         { time: '2019-04-28', value: 106.64 },
-//         { time: '2019-04-29', value: 121.89 },
-//         { time: '2019-04-30', value: 94.43 },
-//     ]) 
-    
-// const renderCount = React.useRef(1);
-
-// useEffect( ()=> {
-
-// const handleResize = _debounce(() => {
-    
-// chart.current.applyOptions({
-//     width: props.g.current.clientWidth, 
-//     height: props.g.current.clientHeight 
-// });
-
-// } ,10 ); 
-
-// const handleStyle  = _debounce(() => { 
-
-//     // while(props.g.current.children.length > 2){
-
-//     //     props.g.current.removeChild(props.g.current.lastChild)
-              
-//     //     };
-
-// chart.current.applyOptions({ 
-//     layout: { 
-//         backgroundColor:props.backgroundColor, 
-//         textColor: props.textColor
-//     },
-     
-// }); 
-
-// areaSeries.current.applyOptions({
-//     lineColor: props.lineColor,
-//      topColor:props.topColor, 
-//      bottomColor:props.bottomColor 
-//     }); 
-
-// }, 10)
-
-
-// window.addEventListener("resize", handleResize); 
-// window.addEventListener("input", handleStyle); 
-
-
-
-// // Clean Up
-// return () => {
-
-// window.removeEventListener('resize', handleResize);
-
-// window.removeEventListener('input', handleStyle);
-
-// }
-
-// },[props])
-
-
-
-// return (
-// <>
-// <div style={{position:"relative", left:"5%", height:"100%", width:"100%", display:"none"}}>
-
-
-// {console.log(`${renderCount.current ++} time(s)`)}
-// </div>
-// </>
-// )
-
-// }
-
-// export default LivePortfolioGraph;
-
-
 import React, { useEffect,  } from "react";
 import _debounce from 'lodash.debounce';
 import { createChart } from 'lightweight-charts';
@@ -169,11 +6,19 @@ import ReactDOM from "react-dom"
 
 const  LivePortfolioGraph = (props) => {
 
-while(props.g.current.children.length > 2){
 
-props.g.current.removeChild(props.g.current.lastChild)
-                  
-};
+if(window !== "undefined "){
+
+console.log(props.g.current.children.length)
+
+    if(props.g.current.children.length > 2){
+
+        props.g.current.removeChild(props.g.current.lastChild)
+                          
+        };
+    }
+
+
 
 const otherOptions = {
 topColor: "#0f7589",
@@ -439,7 +284,7 @@ return (
 
 )}
 
-export default React.memo(LivePortfolioGraph);
+export default LivePortfolioGraph
 
 
 
@@ -494,3 +339,166 @@ export default React.memo(LivePortfolioGraph);
 
 
 </div> */}
+
+
+// import React, { useEffect, useState } from "react";
+// import _debounce from 'lodash.debounce';
+// import { createChart } from 'lightweight-charts';
+ 
+
+// const  LivePortfolioGraph = (props) => {
+
+// const otherOptions = {
+// topColor: props.topColor,
+// bottomColor: props.bottomColor,
+// lineColor: props.lineColor,
+// lineWidth: 2,
+// crossHairMarkerVisible: false,
+// }
+
+// const options = {
+//     width: 0,
+//     height: 0,
+//     layout: {
+//     textColor: props.textColor,
+//     backgroundColor: props.backgroundColor,
+//     },
+//     rightPriceScale: {
+//         scaleMargins: {
+//             top: 0.3,
+//             bottom: 0.25,
+//         },
+//     },
+//     timeScale: {
+//         visible: true,
+//     },
+//     crosshair: {
+//         vertLine: {
+//             width: 5,
+//             color: 'rgba(224, 227, 235, 0.1)',
+//             style: 0,
+//         },
+//         horzLine: {
+//             visible: false,
+//             labelVisible: true,
+//         },
+//     },
+//     localization: {
+//         priceFormatter: price => {
+//         const nf = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
+//          return   nf.format(price)
+//         },
+
+//     },    
+//     grid: {
+//         vertLines: {
+//             color: 'rgba(42, 46, 57, 0)',
+//             visible:true
+          
+//         },
+//         horzLines: {
+//             color: 'rgba(42, 46, 57, 0)',
+       
+//         },
+//     },
+
+// }
+
+
+// const chart = React.useRef(createChart(props.g.current, options) );
+
+// var areaSeries = React.useRef(chart.current.addAreaSeries(otherOptions) );
+    
+//     areaSeries.current.setData([
+//         { time: '2019-04-11', value: 80.01 },
+//         { time: '2019-04-12', value: 96.63 },
+//         { time: '2019-04-13', value: 76.64 },
+//         { time: '2019-04-14', value: 81.89 },
+//         { time: '2019-04-15', value: 74.43 },
+//         { time: '2019-04-16', value: 80.01 },
+//         { time: '2019-04-17', value: 96.63 },
+//         { time: '2019-04-18', value: 76.64 },
+//         { time: '2019-04-19', value: 81.89 },
+//         { time: '2019-04-20', value: 74.43 },
+    
+//         { time: '2019-04-21', value: 82.01 },
+//         { time: '2019-04-22', value: 92.63 },
+//         { time: '2019-04-23', value: 93.64 },
+//         { time: '2019-04-24', value: 95.89 },
+//         { time: '2019-04-25', value: 84.43 },
+//         { time: '2019-04-26', value: 90.01 },
+//         { time: '2019-04-27', value: 96.63 },
+//         { time: '2019-04-28', value: 106.64 },
+//         { time: '2019-04-29', value: 121.89 },
+//         { time: '2019-04-30', value: 94.43 },
+//     ]) 
+    
+// const renderCount = React.useRef(1);
+
+// useEffect( ()=> {
+
+// const handleResize = _debounce(() => {
+    
+// chart.current.applyOptions({
+//     width: props.g.current.clientWidth, 
+//     height: props.g.current.clientHeight 
+// });
+
+// } ,10 ); 
+
+// const handleStyle  = _debounce(() => { 
+
+//     // while(props.g.current.children.length > 2){
+
+//     //     props.g.current.removeChild(props.g.current.lastChild)
+              
+//     //     };
+
+// chart.current.applyOptions({ 
+//     layout: { 
+//         backgroundColor:props.backgroundColor, 
+//         textColor: props.textColor
+//     },
+     
+// }); 
+
+// areaSeries.current.applyOptions({
+//     lineColor: props.lineColor,
+//      topColor:props.topColor, 
+//      bottomColor:props.bottomColor 
+//     }); 
+
+// }, 10)
+
+
+// window.addEventListener("resize", handleResize); 
+// window.addEventListener("input", handleStyle); 
+
+
+
+// // Clean Up
+// return () => {
+
+// window.removeEventListener('resize', handleResize);
+
+// window.removeEventListener('input', handleStyle);
+
+// }
+
+// },[props])
+
+
+
+// return (
+// <>
+// <div style={{position:"relative", left:"5%", height:"100%", width:"100%", display:"none"}}>
+
+
+// {console.log(`${renderCount.current ++} time(s)`)}
+// </div>
+// </>
+// )
+
+// }
+
+// export default LivePortfolioGraph;

@@ -5,6 +5,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import AspectRatioIcon from '@material-ui/icons/AspectRatio';
 import AddIcon from '@material-ui/icons/Add';
 import WidgetsIcon from '@material-ui/icons/Widgets';
+import TextFormatIcon from '@material-ui/icons/TextFormat';
 import CloseIcon from '@material-ui/icons/Close';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -19,12 +20,16 @@ import { AreaChartOutlined, LineChartOutlined,
 import Modal from 'react-bootstrap/Modal';
 import _debounce from 'lodash.debounce';
 import CreateGraph1 from "../Components/createGraph";
+import CreateGraph2 from "../Components/renderGraph";
 
-
+import React from "react";
 import nookies from "nookies";
-import dynamic from "next/dynamic";
+
 import { firebaseAdmin } from "../firebaseAdmin";
-import { SettingsPowerOutlined } from "@material-ui/icons";
+
+import Draggable from 'react-draggable';
+
+import { Rnd } from "react-rnd";
 
 export const getServerSideProps = async (context) => {
     try {
@@ -53,6 +58,10 @@ export const getServerSideProps = async (context) => {
       // or token verification failed
       // either way: redirect to the login page
       return {
+        redirect: {
+          permanent: false,
+          destination: "/login"
+        },  
         props: {} ,
       };
     }
@@ -60,27 +69,43 @@ export const getServerSideProps = async (context) => {
 
 
 const Create = (props) => {
-//Modal
+
+//Modal Options
 const [show , setShow] = useState(false); 
 const [show2 , setShow2] = useState(false); 
-
+const [show3 , setShow3] = useState(false); 
+// Graph Styles or Data
 const [style, setStyle] = useState(true);
 
-const [display , setDisplay] = useState("column");
-
+//Graph Options
+const [type , setType] = useState("column");
 const [title , setTitle] = useState("");
+const [seriestitle , setseriesTitle] = useState("");
+const [xAxis, setxAxis] = useState(false); 
+const [yAxis, setyAxis] = useState(false); 
+const [color, setColor] = useState("#7cb5ec");
+const [tooltipcolor, settooltipColor] = useState("black");
+const [tooltiptextcolor, settooltiptextColor] = useState("white");
+const [axisColor, setaxisColor] = useState("white");
+const [legend, setLegend] = useState(false); 
+
+// Text options
+const [text , setText] = useState("");
+const [textColor , setTextColor] = useState("black");
+const [bold , setBold] = useState(false);
+const [italic , setItalic] = useState(false);
+const [underline , setUnderline] = useState(false);
+const [justify , setJustify] = useState(false);
+
+
+
+
 const [error, setError] = useState(false);
 const [error2, setError2] = useState(false);
 
-const [xAxis, setxAxis] = useState(false); 
-const [yAxis, setyAxis] = useState(false); 
-
-const [color, setColor] = useState("#7cb5ec");
-
-const [legend, setLegend] = useState(false); 
 
 
-  const [data, setData] = useState( 
+const [data, setData] = useState( 
     new Map( 
     Object.entries({
     datapoint1: "",
@@ -91,6 +116,10 @@ const [legend, setLegend] = useState(false);
   )
   );
 
+
+  const [numberofGraphs, setnumberofGraphs] = useState([]); 
+
+  const [numberofText, setnumberofText] = useState([]); 
 
   const handleClick = () => {
 
@@ -126,9 +155,29 @@ const [legend, setLegend] = useState(false);
 
   setData(newRows)
 
+  console.log( data )
+
 }
 
 
+const TextBox = (props) => { 
+
+  return (
+    <span style={{color:props.textColor, 
+    fontWeight: props.bold ? "bold": "normal", 
+    fontFamily:"Trebuchet MS,  Arial, sans-serif",
+    fontStyle: props.italic? "italic": "normal",
+    textDecoration: props.underline? "underline": "none",
+    textAlign: props.justify? "justify" :"none"
+    }}>
+    <h2>{props.text}</h2>
+    </span>
+  )
+}
+
+
+
+console.log(numberofGraphs)
 
 console.log(props.email) 
 
@@ -142,10 +191,43 @@ const value = document.getElementById("chartseriescolor").value;
 
 setColor(value)
 
-}, 200) 
+}, 200) ;
 
 
+const changetooltipcolor = _debounce(() => {
+
+  const value = document.getElementById("charttooltipcolor").value;
+  
+  settooltipColor(value)
+  
+  }, 200) 
+
+
+  const changetooltiptextcolor = _debounce(() => {
+
+    const value = document.getElementById("charttooltiptextcolor").value;
     
+    settooltiptextColor(value)
+    
+    }, 200) 
+  
+    const changeaxiscolor = _debounce(() => {
+
+      const value = document.getElementById("chartaxiscolor").value;
+      
+      setaxisColor(value)
+      
+      }, 200) 
+    
+
+const changeTextcolor = _debounce(() => {
+
+const value = document.getElementById("textInputColor").value;
+        
+setTextColor(value)
+        
+}, 200) ;
+        
 
 const recentTrades  = ( 
 
@@ -158,7 +240,29 @@ const recentTrades  = (
 
 <Modal.Header>
 
-    <AddCircleSharpIcon onClick={() => setShow(false) } 
+  <AddCircleSharpIcon onClick={ () => {
+
+        setnumberofGraphs(prevLines => (
+
+          [
+          ...prevLines,
+       {
+        type:type, title:title, seriestitle:seriestitle,
+            legend:legend,
+             xAxis:xAxis, 
+            yAxis:yAxis,  
+            color:color,
+            tooltipcolor:tooltipcolor,
+            tooltiptextcolor:tooltiptextcolor,
+            axisColor:axisColor,
+            data:[...data],
+       }
+        ]
+        ) 
+        );
+    
+        setShow(false);
+} } 
     style={{color:"#c7c9d3", 
     float:"right"}} />
 
@@ -191,35 +295,38 @@ id="inputtitle"
 
 <Modal.Body>
 
-<BarChartOutlined onClick={() => setDisplay("column") } 
+<BarChartOutlined onClick={() => setType("column") } 
     style={{color:"#c7c9d3", 
     float:"right"}} 
     />
 
 
 <PieChartOutlined  onClick={() => 
-setDisplay("pie") } 
+setType("pie") } 
     style={{color:"#c7c9d3", 
     float:"right"}} 
     />
 
-<LineChartOutlined  onClick={() => setDisplay("line") } 
+<LineChartOutlined  onClick={() => setType("line") } 
     style={{color:"#c7c9d3", 
     float:"right"}} 
         />
 
-<AreaChartOutlined onClick={() => setDisplay("area") } 
+<AreaChartOutlined onClick={() => setType("area") } 
 style={{color:"#c7c9d3", 
     float:"right"}}  />
 
 
 <div className="GraphArea"  id="GraphArea">
 
-  <CreateGraph1 key={[display, title, legend, xAxis, yAxis, color, [...data] ]}
-   type={display} title={title} 
+  <CreateGraph1 key={[type, title, legend, xAxis, yAxis, color, tooltipcolor, tooltiptextcolor,axisColor, [...data], seriestitle ]}
+   type={type} title={title} seriestitle={seriestitle}
    legend={legend} xAxis={xAxis} 
    yAxis={yAxis} 
    color={color}
+   tooltipcolor={tooltipcolor}
+   tooltiptextcolor={tooltiptextcolor}
+   axisColor={axisColor}
    data={[...data]}
    /> 
 
@@ -275,22 +382,109 @@ Data
 <br/>
 <br/>
 
-{display !== "pie" ?  
+{type !== "pie" ?  
 <>
+
   <input 
       id="chartseriescolor" 
       type="color" 
      defaultValue={color}
       style={{ marginTop:"45px"}}
-      title="SeriesColor" 
+      title="Series Color" 
       onChange={changecolor} 
        />
 
      <p>Color</p> 
 
+     <br/>
+
+     <br/>
+
+    <p>Tooltip</p>
+
+    <br/>
+
+     <input 
+      id="charttooltipcolor" 
+      type="color" 
+     defaultValue={tooltipcolor}
+      style={{ marginTop:"45px"}}
+      title="Background Color" 
+      onChange={changetooltipcolor} 
+       />
+
+     <p>Background Color</p> 
+
+     <br/>
+
+     <input 
+      id="charttooltiptextcolor" 
+      type="color" 
+     defaultValue={tooltiptextcolor}
+      style={{ marginTop:"45px"}}
+      title="Background Color" 
+      onChange={changetooltiptextcolor} 
+       />
+
+    <p>Text Color</p> 
+
+<br/>
+
+{xAxis || yAxis? 
+
+<>
+<input 
+id="chartaxiscolor" 
+type="color" 
+defaultValue={axisColor}
+style={{ marginTop:"45px"}}
+title="Background Color" 
+onChange={changeaxiscolor} 
+ />
+
+<p>Axis  Color</p> 
 </>
 :
-null}
+null
+
+} 
+</>
+
+:
+
+<>
+<p>Tooltip</p>
+
+<br/>
+<input 
+id="charttooltipcolor" 
+type="color" 
+defaultValue={tooltipcolor}
+style={{ marginTop:"45px"}}
+title="Tooltip Color" 
+onChange={changetooltipcolor} 
+ />
+
+<p> Background Color</p> 
+
+<br/>
+
+
+<input 
+      id="charttooltiptextcolor" 
+      type="color" 
+     defaultValue={tooltiptextcolor}
+      style={{ marginTop:"45px"}}
+      title="Background Color" 
+      onChange={changetooltiptextcolor} 
+       />
+
+    <p>Text Color</p> 
+
+
+</>
+
+}
 
 </div>
 
@@ -305,17 +499,42 @@ null
 
 <Modal.Header bsPrefix="DataBoxheader" >
 
-<span className="DataBoxheader1" onClick={handleClick}> Add Fields </span>
+<span className="DataBoxheader1" onClick={handleClick}> 
+Add Fields 
+</span>
 
-<span className="DataBoxheader2" onClick={handleDelete}> Remove Fields</span>
+<span className="DataBoxheader2" onClick={handleDelete}> 
+Remove Fields
+</span>
 
 <CloseIcon onClick={() => setShow2(false) } 
     style={{color:"#c7c9d3", 
     float:"right"}}/>
 
+
+
 </Modal.Header>
 
 <Modal.Body  bsPrefix="DataBoxbody" >
+
+<input className="inputseriestitle" 
+id="inputseriestitle"
+   type="text" 
+   value={seriestitle} 
+   placeholder="Series Title (Optional)" 
+   onInput={ (e) => { 
+     if(e.target.value.length > 55 ){
+      setError(true)
+       console.log("too Long 7bb <3")
+       setseriesTitle("")
+     }
+     else{
+      console.log(e.target.value)
+      setseriesTitle(e.target.value)
+   
+
+     }
+   }} />
 
 <div className="DataBoxbody1" >
 
@@ -323,11 +542,16 @@ null
         return (
           <input
           className="inputboxes"
+          id={datapoint}
+           value={data.get(datapoint) }
             key={datapoint}
             onChange={handleChange(datapoint)}
           />
         );
-      })}
+
+      }
+      
+      )}
 
 </div>
 
@@ -345,12 +569,202 @@ null
 
     );
 
+  const recentText = ( 
+    <>
+    <Modal 
+    show={show3}
+    style={{opacity:3}}
+    onHide={ () => setShow3(false) } >
+
+<Modal.Header bsPrefix="TextBoxheader" >
+
+<CloseIcon onClick={() => setShow3(false) } 
+style={{color:"#c7c9d3",float:"right"}}
+/>
+
+<AddCircleSharpIcon onClick={ () => {
+
+if(text == "") {
+  console.log("Ayree");
+  setShow3(false);
+}
+else{
+setnumberofText(prevLines => (
+
+  [
+  ...prevLines,
+{
+text:text,
+textColor:textColor,
+bold:bold,
+italic:italic,
+underline:underline,
+justify:justify,
+
+}
+]
+) 
+);
+
+setShow3(false);
+setText("");
+}
+
+}} 
+style={{color:"#c7c9d3", 
+float:"right"}} />
+
+</Modal.Header>
+
+<Modal.Body  bsPrefix="TextBoxbody" >
+
+<input className="textInput" 
+id="textInput"
+   type="text" 
+   value={text} 
+   placeholder="Enter Text Here" 
+   onInput={ (e) => { 
+      console.log(e.target.value)
+      setText(e.target.value)
+  }} />
+
+<div className="textInput2">
+  <input 
+  className="textInputColor"
+      id="textInputColor" 
+      type="color" 
+      defaultValue={textColor}
+      style={{ marginTop:"45px"}}
+      title="Text Color" 
+      onChange={changeTextcolor} 
+       />
+
+  <p>Text Color</p> 
+
+</div>
+
+<div className="textInput3">
+
+<Checkbox
+        checked={bold}
+        onChange={(e) =>{ setBold(e.target.checked) }}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+      <p> Bold </p>
+
+      <Checkbox
+        checked={italic}
+        onChange={(e) =>{ setItalic(e.target.checked) }}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+      <p> Italic </p>
+
+      <br/>
+      <Checkbox
+        checked={underline}
+        onChange={(e) =>{ setUnderline(e.target.checked) }}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+      <p> Underline </p>
+
+      <Checkbox
+        checked={justify}
+        onChange={(e) =>{ setJustify(e.target.checked) }}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+      <p> Justify </p>
+</div>
+</Modal.Body>
+
+</Modal>
+  </>
+  );
+
+
 
 return (
 
+
+
+
 <div className="createPage" >
 
+
 <div className="WorkSpace" id="WorkSpace">
+
+
+<div id="createdGraph">
+
+{ numberofGraphs.map( (si, k) => (
+       
+       <>
+       <Draggable > 
+       
+       <div className="resizablebox"> 
+       <CloseIcon  
+       onClick={ () => {
+         const newgraphs = numberofGraphs.filter( (object, kk) =>  k!== kk ) 
+         setnumberofGraphs(newgraphs)
+       }}
+         style={{color:"#c7c9d3", 
+          fontSize:"1.5rem"}}
+         />  
+
+       <CreateGraph2
+       key={[si.type, si.title, si.legend, si.xAxis, si.yAxis, 
+            si.color, si.tooltipcolor, si.tooltiptextcolor, si.axisColor, 
+           si.data, si.seriestitle,]}
+           type={si.type} title={si.title} seriestitle={si.seriestitle}
+           legend={si.legend} xAxis={si.xAxis} 
+           yAxis={si.yAxis}    
+           color={si.color}
+           tooltipcolor={si.tooltipcolor}
+           tooltiptextcolor={si.tooltiptextcolor}
+           axisColor={si.axisColor}
+           data={si.data}
+          
+           />
+         </div>
+         </Draggable>
+         
+           </>
+
+     ))}
+
+
+</div>
+
+<div className="createdText">
+
+{ numberofText.map( (si, k) => (
+
+       <>
+       <Rnd> 
+  
+       <CloseIcon  
+       onClick={ () => {
+         const newtext = numberofText.filter( (object, kk) =>  k!== kk ) 
+         setnumberofText(newtext)
+       }}
+         style={{color:"#c7c9d3", 
+          fontSize:"1.5rem"}}
+         />  
+
+  
+       <TextBox key={[si.text, si.textColor, si.bold, si.italic, si.underline]}
+           text={si.text} 
+           textColor={si.textColor}
+            bold={si.bold}
+            italic={si.italic}
+            underline={si.underline}
+            jutify={si.justify} />
+         </Rnd>
+           </>
+        
+     ))}
+
+</div>
+
 
 </div>
       
@@ -428,17 +842,20 @@ Charts
 </span>
 
 
-
-{recentTrades}
-
-
-
 <span className="designBar3">
 Widgets 
 <WidgetsIcon onClick={()=> console.log("Ayre")}/>
 </span>
 
+<span className="designBar4">
+Text 
+<TextFormatIcon onClick={ ()=> setShow3(true) }/> 
+
+</span>
 </div>
+
+{recentTrades}
+{recentText}
 
     
 {error? 
@@ -470,6 +887,7 @@ null
 null
   
 } 
+
 
 </div>
 

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HightchartsReact from "highcharts-react-official";
+import ReactDOM from 'react-dom'
 
-const CreateGraph1 = (props) => {
+
+const CreateGraph2 = (props) => {
 
 
     var arr = [];
@@ -12,7 +14,6 @@ const CreateGraph1 = (props) => {
      arr[i] =  [props.data[i][1] , Number(props.data[i+1][1]) ] 
 
     }
-
 
 
 const [option, setOption] = useState({ 
@@ -98,18 +99,16 @@ options={option}
 
 return (
 
-<div style={{
-          position:"relative",
-          left:`${props.positionX}px`,
-        }}> 
+<div> 
 
 {renderHighChartCard}
-        
-{/* <buttton onClick={} />  */}
+
 </div>
 
 );
 
 }
 
-export default CreateGraph1; 
+
+
+export default CreateGraph2 ; 

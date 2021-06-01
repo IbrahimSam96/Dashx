@@ -13,7 +13,7 @@ import LineGraph from "../Components/Linegraph"
 import BarGraph from "../Components/GoogleSheets"
 import _debounce from 'lodash.debounce';
 import Link from 'next/link'
-
+import { useRouter } from 'next/router'
 
 
 const LivePortfolioGraph = dynamic( () => {
@@ -60,6 +60,7 @@ export const getServerSideProps = async (context) => {
 
 const Main = (props) => {
 
+  const router = useRouter();
 
   if(props.token) {
 
@@ -141,7 +142,7 @@ const Main = (props) => {
       <div className="landing-intro3">
 
       <h2>
-        Display Stunning Financial Charts
+        Display & Customize Stunning Financial Charts
       </h2>
 
         <div id="customization">
@@ -156,11 +157,13 @@ const Main = (props) => {
 
     </div>
 
+
     <div className="getStarted">
 
-      <Link href= "/create">
-      <a>Get Started</a>
-      </Link>
+      <a href="/create">
+          Get Started 
+      </a>
+   
 
 
      </div>
