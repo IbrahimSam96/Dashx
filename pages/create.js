@@ -1,6 +1,11 @@
 import {useEffect, useRef, useState} from "react"
 import Checkbox from '@material-ui/core/Checkbox';
+import Slider from '@material-ui/core/Slider';
 
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 import AspectRatioIcon from '@material-ui/icons/AspectRatio';
 import AddIcon from '@material-ui/icons/Add';
@@ -14,30 +19,42 @@ import AddCircleSharpIcon from '@material-ui/icons/AddCircleSharp';
 import { AreaChartOutlined, LineChartOutlined, 
   PieChartOutlined, 
   BarChartOutlined, 
- 
 } from '@ant-design/icons';
 
 import Modal from 'react-bootstrap/Modal';
 import _debounce from 'lodash.debounce';
 import CreateGraph1 from "../Components/createGraph";
 import CreateGraph2 from "../Components/renderGraph";
+ import TextBox from "../Components/TextBox";
+
 
 import React from "react";
 import nookies from "nookies";
 
 import { firebaseAdmin } from "../firebaseAdmin";
+import { firebaseClient } from "../FirebaseIntialization";
 
-import Draggable from 'react-draggable';
 
-import { Rnd } from "react-rnd";
 
 export const getServerSideProps = async (context) => {
     try {
+      
       const cookies = nookies.get(context);
       console.log(JSON.stringify(cookies, null, 2));
       const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
       const { uid, email } = token;
-  
+
+      const db = firebaseAdmin.firestore();
+
+    db.collection("Users").doc(uid).collection("Dashboard").doc("First").set({
+
+    })
+  .then(() => {
+  console.log("Document successfully written!");
+})
+.catch((error) => {
+  console.error("Error writing document: ", error);
+});
       // the user is authenticated!
       // FETCH STUFF HERE
   
@@ -78,6 +95,18 @@ const [show3 , setShow3] = useState(false);
 const [style, setStyle] = useState(true);
 
 //Graph Options
+
+const [data, setData] = useState( 
+  new Map( 
+  Object.entries({
+  datapoint1: "",
+  datapoint2: "",
+  datapoint3: "",
+  datapoint4: ""
+})
+)
+);
+
 const [type , setType] = useState("column");
 const [title , setTitle] = useState("");
 const [seriestitle , setseriesTitle] = useState("");
@@ -91,13 +120,13 @@ const [legend, setLegend] = useState(false);
 
 // Text options
 const [text , setText] = useState("");
-const [textColor , setTextColor] = useState("black");
+const [textColor , setTextColor] = useState("white");
 const [bold , setBold] = useState(false);
 const [italic , setItalic] = useState(false);
 const [underline , setUnderline] = useState(false);
 const [justify , setJustify] = useState(false);
-
-
+const [center , setCenter] = useState(false);
+const [textSize , settextSize] = useState(1.2);
 
 
 const [error, setError] = useState(false);
@@ -105,21 +134,16 @@ const [error2, setError2] = useState(false);
 
 
 
-const [data, setData] = useState( 
-    new Map( 
-    Object.entries({
-    datapoint1: "",
-    datapoint2: "",
-    datapoint3: "",
-    datapoint4: ""
-  })
-  )
-  );
-
 
   const [numberofGraphs, setnumberofGraphs] = useState([]); 
 
   const [numberofText, setnumberofText] = useState([]); 
+
+
+
+
+
+
 
   const handleClick = () => {
 
@@ -155,33 +179,8 @@ const [data, setData] = useState(
 
   setData(newRows)
 
-  console.log( data )
 
 }
-
-
-const TextBox = (props) => { 
-
-  return (
-    <span style={{color:props.textColor, 
-    fontWeight: props.bold ? "bold": "normal", 
-    fontFamily:"Trebuchet MS,  Arial, sans-serif",
-    fontStyle: props.italic? "italic": "normal",
-    textDecoration: props.underline? "underline": "none",
-    textAlign: props.justify? "justify" :"none"
-    }}>
-    <h2>{props.text}</h2>
-    </span>
-  )
-}
-
-
-
-console.log(numberofGraphs)
-
-console.log(props.email) 
-
-console.log([...data])
 
 
 const changecolor = _debounce(() => {
@@ -230,7 +229,6 @@ setTextColor(value)
         
 
 const recentTrades  = ( 
-
 <>
 <Modal 
     backdrop="static"
@@ -240,9 +238,10 @@ const recentTrades  = (
 
 <Modal.Header>
 
-  <AddCircleSharpIcon onClick={ () => {
+<AddCircleSharpIcon onClick={  () => {
 
-        setnumberofGraphs(prevLines => (
+
+setnumberofGraphs(prevLines => (
 
           [
           ...prevLines,
@@ -255,14 +254,42 @@ const recentTrades  = (
             tooltipcolor:tooltipcolor,
             tooltiptextcolor:tooltiptextcolor,
             axisColor:axisColor,
+            id:type+title+color+xAxis+yAxis,
             data:[...data],
+            
        }
         ]
         ) 
-        );
-    
-        setShow(false);
-} } 
+);
+
+
+  if(window !== "undefined") {
+
+    const clientDb = firebaseClient.firestore();  
+  
+      clientDb.collection("Users").doc(props.uid)
+      .collection("Dashboard")
+      .doc("First").collection("Graphs").add({ 
+        type:type, title:title, seriestitle:seriestitle,
+        legend:legend,
+         xAxis:xAxis, 
+        yAxis:yAxis,  
+        color:color,
+        tooltipcolor:tooltipcolor,
+        tooltiptextcolor:tooltiptextcolor,
+        axisColor:axisColor,
+        id:type+title+color+xAxis+yAxis,
+        data: [...data.values()]
+    })  
+
+  
+}
+
+
+setShow(false);
+setTitle("");
+
+}} 
     style={{color:"#c7c9d3", 
     float:"right"}} />
 
@@ -319,7 +346,12 @@ style={{color:"#c7c9d3",
 
 <div className="GraphArea"  id="GraphArea">
 
-  <CreateGraph1 key={[type, title, legend, xAxis, yAxis, color, tooltipcolor, tooltiptextcolor,axisColor, [...data], seriestitle ]}
+  <CreateGraph1 
+  key={[type, title, 
+    legend, xAxis, yAxis, color, 
+    tooltipcolor, tooltiptextcolor, 
+    axisColor, [...data], 
+    seriestitle ]}
    type={type} title={title} seriestitle={seriestitle}
    legend={legend} xAxis={xAxis} 
    yAxis={yAxis} 
@@ -442,7 +474,7 @@ title="Background Color"
 onChange={changeaxiscolor} 
  />
 
-<p>Axis  Color</p> 
+<p>label  Color</p> 
 </>
 :
 null
@@ -585,29 +617,53 @@ style={{color:"#c7c9d3",float:"right"}}
 <AddCircleSharpIcon onClick={ () => {
 
 if(text == "") {
-  console.log("Ayree");
+  console.log("Awkward");
   setShow3(false);
 }
+
 else{
+
 setnumberofText(prevLines => (
 
   [
   ...prevLines,
-{
-text:text,
-textColor:textColor,
-bold:bold,
-italic:italic,
-underline:underline,
-justify:justify,
 
-}
+{text:text, textColor:textColor, 
+  bold:bold, italic:italic, 
+  underline:underline, justify:justify, textSize:textSize,
+  center:center,
+   id:text+textColor+textSize, 
+  
+  } 
 ]
+
 ) 
 );
 
+if(window !== "undefined") {
+
+  const clientDb = firebaseClient.firestore();  
+
+    clientDb.collection("Users").doc(props.uid)
+    .collection("Dashboard")
+    .doc("First").collection("Text").add({ 
+      text:text,
+      textColor:textColor,
+      bold:bold,
+      italic:italic,
+      underline:underline,
+      justify:justify,
+      center:center,
+      textSize:textSize,
+      id:text+textColor
+  })  
+
+
+    }
+
 setShow3(false);
 setText("");
+
 }
 
 }} 
@@ -629,6 +685,7 @@ id="textInput"
   }} />
 
 <div className="textInput2">
+
   <input 
   className="textInputColor"
       id="textInputColor" 
@@ -640,6 +697,24 @@ id="textInput"
        />
 
   <p>Text Color</p> 
+
+  
+  <FormControl style={{width:"120px", marginLeft:"35px", marginTop:"35px" }} >
+        <InputLabel style={{color:"white" }} >Text Size</InputLabel>
+        <Select
+          style={{color:"white", borderColor:"white" }}
+          id="demo-simple-select"
+          value={textSize}
+          onChange={ (e) => {
+            console.log(e.target.value)
+          settextSize(e.target.value)
+          }}
+        >
+          <MenuItem value={0.7}>Small</MenuItem>
+          <MenuItem value={1.2}>Medium</MenuItem>
+          <MenuItem value={3}>Large</MenuItem>
+        </Select>
+      </FormControl>
 
 </div>
 
@@ -673,6 +748,14 @@ id="textInput"
         inputProps={{ 'aria-label': 'primary checkbox' }}
       />
       <p> Justify </p>
+
+      <br/>
+      <Checkbox
+        checked={center}
+        onChange={(e) =>{ setCenter(e.target.checked) }}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+      <p> Center </p>
 </div>
 </Modal.Body>
 
@@ -681,39 +764,26 @@ id="textInput"
   );
 
 
+ 
+
 
 return (
 
-
-
-
 <div className="createPage" >
 
+<div className="gongas" >
 
-<div className="WorkSpace" id="WorkSpace">
+<div className="jojo" > 
 
+<div className="WorkSpace" id="WorkSpace" >
 
-<div id="createdGraph">
 
 { numberofGraphs.map( (si, k) => (
        
-       <>
-       <Draggable > 
-       
-       <div className="resizablebox"> 
-       <CloseIcon  
-       onClick={ () => {
-         const newgraphs = numberofGraphs.filter( (object, kk) =>  k!== kk ) 
-         setnumberofGraphs(newgraphs)
-       }}
-         style={{color:"#c7c9d3", 
-          fontSize:"1.5rem"}}
-         />  
-
+   
+<>
        <CreateGraph2
-       key={[si.type, si.title, si.legend, si.xAxis, si.yAxis, 
-            si.color, si.tooltipcolor, si.tooltiptextcolor, si.axisColor, 
-           si.data, si.seriestitle,]}
+          key={si.type+si.title}
            type={si.type} title={si.title} seriestitle={si.seriestitle}
            legend={si.legend} xAxis={si.xAxis} 
            yAxis={si.yAxis}    
@@ -722,52 +792,54 @@ return (
            tooltiptextcolor={si.tooltiptextcolor}
            axisColor={si.axisColor}
            data={si.data}
+           numberofGraphs={numberofGraphs}
+           setnumberofGraphs={setnumberofGraphs}
+           id={si.id}
+           uid={props.uid}
+           k={k}
+
+            />
+
           
-           />
-         </div>
-         </Draggable>
-         
-           </>
+</>
+     
 
-     ))}
-
-
-</div>
-
-<div className="createdText">
+     ))
+}
 
 { numberofText.map( (si, k) => (
 
-       <>
-       <Rnd> 
-  
-       <CloseIcon  
-       onClick={ () => {
-         const newtext = numberofText.filter( (object, kk) =>  k!== kk ) 
-         setnumberofText(newtext)
-       }}
-         style={{color:"#c7c9d3", 
-          fontSize:"1.5rem"}}
-         />  
-
-  
-       <TextBox key={[si.text, si.textColor, si.bold, si.italic, si.underline]}
+    <> 
+       <TextBox key={si.text+si.textColor}
            text={si.text} 
            textColor={si.textColor}
             bold={si.bold}
             italic={si.italic}
             underline={si.underline}
-            jutify={si.justify} />
-         </Rnd>
+            justify={si.justify} 
+            center={si.center}
+            textSize={si.textSize}
+            id={si.id}
+            numberofText={numberofText}
+            setnumberofText={setnumberofText}
+            uid={props.uid}
+
+            />
+          
            </>
         
      ))}
 
+
+
+
+</div>
+
+</div>
+
 </div>
 
 
-</div>
-      
 <div className="designBar" id="designBar">
 
 
@@ -789,6 +861,8 @@ const  div =  document.getElementById("designBar1Options");
 
 <span id="designBar1Options" >
 
+
+
 <CloseIcon onClick={() => {
 const  div =  document.getElementById("designBar1Options");
         div.style.display = 'none';
@@ -809,6 +883,19 @@ const  div =  document.getElementById("designBar1Options");
         const background = document.getElementById("WorkSpace")
 
             background.style.backgroundColor = e.target.value
+
+            if(window !== "undefined") {
+
+              const clientDb = firebaseClient.firestore();  
+            
+              const backgroundColorRef = clientDb.collection("Users").doc(props.uid)
+              .collection("Dashboard")
+              .doc("First");
+          
+              backgroundColorRef.update({
+                backgroundColor:e.target.value
+              })
+          }
         }} 
          />
 
@@ -827,9 +914,103 @@ const  div =  document.getElementById("designBar1Options");
         const background = document.getElementById("WorkSpace")
 
             background.style.borderColor = e.target.value
+
+            if(window !== "undefined") {
+
+              const clientDb = firebaseClient.firestore();  
+            
+              const borderColorRef = clientDb.collection("Users").doc(props.uid)
+              .collection("Dashboard")
+              .doc("First");
+          
+              borderColorRef.update({
+                borderColor:e.target.value
+              })
+          }
         }} 
          />
 
+<br/>
+<br/>
+
+
+
+<p>Width</p>
+
+<span>
+
+<Slider
+        min={845}
+        max={2500}
+        defaultValue={1445}
+        aria-labelledby="discrete-slider-custom"
+        step={100}
+        valueLabelDisplay="auto"
+        marks={[{value:845, label:"Min"}, {value:1445, label:"Default"}, {value:2500, label:"Max"}]}
+        onChangeCommitted={(e,v) => {
+
+          const background = document.getElementById("WorkSpace")
+
+            background.style.width = `${v}px`
+
+            
+  if(window !== "undefined") {
+
+    const clientDb = firebaseClient.firestore();  
+  
+    const widthref = clientDb.collection("Users").doc(props.uid)
+    .collection("Dashboard")
+    .doc("First");
+
+    widthref.update({
+      width:v
+    })
+}
+
+        }}
+        
+      />
+
+</span>
+
+<br/>
+<br/>
+
+<p>Height</p>
+
+<span>
+
+<Slider
+        min={750}
+        max={3550}
+        defaultValue={750}
+        aria-labelledby="discrete-slider-custom"
+        step={200}
+        valueLabelDisplay="auto"
+        marks={[{value:750, label:"Min"}, {value:3550, label:"Max"}]}
+        onChangeCommitted={(e,v) => {
+
+          const background = document.getElementById("WorkSpace")
+
+            background.style.height = `${v}px`
+
+            if(window !== "undefined") {
+
+              const clientDb = firebaseClient.firestore();  
+            
+              const heightref = clientDb.collection("Users").doc(props.uid)
+              .collection("Dashboard")
+              .doc("First");
+          
+              heightref.update({
+                height:v
+              })
+          }
+        }}
+        
+      />
+
+</span>
 
 
 </span>
@@ -843,6 +1024,7 @@ Charts
 
 
 <span className="designBar3">
+<span className="designBar3-tooltip"><p>coming soon!</p> </span>
 Widgets 
 <WidgetsIcon onClick={()=> console.log("Ayre")}/>
 </span>
@@ -850,7 +1032,6 @@ Widgets
 <span className="designBar4">
 Text 
 <TextFormatIcon onClick={ ()=> setShow3(true) }/> 
-
 </span>
 </div>
 

@@ -31,17 +31,26 @@ export const getServerSideProps = async (context) => {
     const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
     const { uid, email } = token;
 
+    const db = firebaseAdmin.firestore();
+
+    // Add a new document in collection "Users"
+db.collection("Users").doc(uid).set({
+  uid: uid,
+  email: email,
+})
+.then(() => {
+  console.log("Document successfully written!");
+})
+.catch((error) => {
+  console.error("Error writing document: ", error);
+});
+
     // the user is authenticated!
     // FETCH STUFF HERE
 
     return {
       props: {  email, uid , token},
-
-      // redirect: {
-      //   permanent: false,
-      //   destination: "/create"
-      // }
-
+      
     };
   } catch (err) {
     // either the `token` cookie didn't exist
@@ -60,7 +69,8 @@ export const getServerSideProps = async (context) => {
 
 const Main = (props) => {
 
-  const router = useRouter();
+  console.log(props)
+
 
   if(props.token) {
 

@@ -1,5 +1,6 @@
 import firebaseClient from "firebase/app";
-import "firebase/firebase-auth"
+import "firebase/firebase-auth";
+import "firebase/firebase-firestore";
 
 var firebaseConfig = {
   apiKey: "AIzaSyDY5tvRBx5MqMXXg1dmCAyF3u2fVwWaUys",
@@ -13,7 +14,7 @@ var firebaseConfig = {
 if (typeof window !== 'undefined' && !firebaseClient.apps.length) {
   firebaseClient.initializeApp(firebaseConfig);
   firebaseClient.auth().setPersistence(firebaseClient.auth.Auth.Persistence.SESSION);
-
+  firebaseClient.firestore();
 }
 
 export { firebaseClient };

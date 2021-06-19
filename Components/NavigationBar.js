@@ -13,15 +13,18 @@ return (
 
 <div className="Navbar">
 
-    <div className="FinancialCharts">
+    <div className="GraphX">
 
-    <Link className="NavLink" href= "/FinancialCharts"> 
+    <Link className="NavLink" href= "/" > 
     <div className="hodl" 
     style={{ width:'100%', height:"75px", color:"white",
      backgroundColor:"transparent", display:"grid",
       gridTemplateColumns:"repeat(2, 1fr)", 
       gridTemplateRows:"repeat(1, 75px)"}} >
-    <span style={{gridColumn:"1/3", gridRow:"1/1", fontSize:"1.1rem", paddingTop:"25px", paddingLeft:"25px", fontFamily:"'Trebuchet MS',  Arial, sans-serif", cursor:"pointer" }}>Financial Charts</span>
+    <span style={{gridColumn:"1/3", gridRow:"1/1", 
+    fontSize:"1.1rem", paddingTop:"25px", paddingLeft:"25px", 
+    fontFamily:"'Trebuchet MS',  Arial, sans-serif",
+     cursor:"pointer" }}>GraphX</span>
 
     </div>
     </Link> 
@@ -31,7 +34,7 @@ return (
     
   <div className="Dashboards">
 
-    <Link className="NavLink" href= "/Dashboards"> 
+    <Link className="NavLink" href= "#"> 
     <div className="hodl" 
     style={{ width:'100%', height:"75px", color:"white",
      backgroundColor:"transparent", display:"grid",
@@ -42,19 +45,24 @@ return (
     </div>
     </Link> 
 
-
+    <span className="report-tooltip2"><p>coming soon!</p> </span>
     </div>
     
     
     <div className="Reports">
 
-    <Link className="NavLink" href= "/Reports"> 
+    <Link className="NavLink" href= "#"> 
     <div className="hodl" 
     style={{ width:'100%', height:"75px", color:"white",
      backgroundColor:"transparent", display:"grid",
       gridTemplateColumns:"repeat(2, 1fr)", 
       gridTemplateRows:"repeat(1, 75px)"}} >
-    <span style={{gridColumn:"1/3", gridRow:"1/1", fontSize:"1.1rem", paddingTop:"25px", paddingLeft:"25px", fontFamily:"'Trebuchet MS',  Arial, sans-serif", cursor:"pointer" }}>Reports</span>
+    <span style={{gridColumn:"1/3", gridRow:"1/1",
+     fontSize:"1.1rem", paddingTop:"25px", paddingLeft:"25px", 
+     fontFamily:"'Trebuchet MS',  Arial, sans-serif",
+      cursor:"pointer"}}> 
+      Reports
+       </span>
 
     </div>
     </Link> 
@@ -103,12 +111,17 @@ return (
       <span className="ProfileLink" style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
         Profile
       </span> 
+
       </Link> 
-      <Link  href= "/create"> 
+    
+      
       <span className="CreateLink " style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
+      <a href= "/create" style={{ textDecoration: 'none' }}>
         Create
+        </a>
       </span>
-      </Link> 
+ 
+    
 
       </div>
 

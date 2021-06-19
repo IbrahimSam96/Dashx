@@ -22,11 +22,19 @@ a {
 }
 
 
-.Main{
+/* .Main{
     display: grid;
       grid-template-columns: repeat(14, 1fr);
       grid-template-rows: repeat(15, 1fr);
+      grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
      max-width: 2600px;
+} */
+
+.Main{
+  display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+
 }
 
 
@@ -106,7 +114,6 @@ a {
 
 
 .LineGraph{
-  
   grid-column: 8/14;
   grid-row: 3/8;
   max-width: 750px
@@ -290,48 +297,60 @@ display: inline-block;
 /* create.js  */
 
 .createPage{
-  grid-column: 1/15;
+  grid-column: 1/16;
   grid-row: 1/16;
 
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(10, 175px);
+  grid-template-rows: repeat(15, 1fr);
 
-  max-width: 2600px;
+ 
 }
 
-.WorkSpace{
-grid-column: 2/12;
-grid-row: 2/16;
+
+
+.gongas{
+  grid-column: 2/13;
+  grid-row: 2/8;
+  
+  overflow: auto;
+
+  max-height: 90vh;
+}
+
+.jojo{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 10px 30px 0 0px;
+  max-width: 1800px;
+
+}
+
+ .WorkSpace{
+min-width: 845px;
+min-height: 750px;
+position:relative;
+
+
+overflow: auto;
+overflow-y: auto;
+
 
 
 box-shadow: rgba(0,0,0,.5) 0px 0px 20px 0px;
 border: 2px solid #c7c9d3;
 
-display: grid;
-grid-template-columns: repeat(12, 1fr);
-grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
-}
 
-#createdGraph{
-  grid-column: 2/6;
-  grid-row: 2/6;
-}
-
-#createdGraph:after { 
-  content: " "; 
-  display: block;
-  clear: both;
 } 
 
-.createdText{
-  grid-row: 1/1;
-  grid-column: 2/4;
-} 
+
+
 
 
 .react-draggable:hover{
-  border: 2px solid #F43B5F;
+  border: 2px dashed #F43B5F;
+
 }
 
 .react-draggable .MuiSvgIcon-root{
@@ -344,6 +363,7 @@ grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
 
  .react-draggable .MuiSvgIcon-root:nth-child(1):hover{
 color: #F43B5F!important;
+cursor: pointer;
  }
 
 
@@ -395,6 +415,7 @@ align-self: center;
 .designBar1 .MuiSvgIcon-root:hover{
   -webkit-transform: scale(1.25);
   transform: scale(1.25);
+  
 }
 
 #designBar1Options{
@@ -412,11 +433,12 @@ left: 105px;
 
 background-color: #000428;
 box-shadow: rgba(0,0,0,.5) 0px 0px 20px 0px; 
-height: 230px;
-width: 155px;
+height: 450px;
+width: 175px;
 z-index: 2000;
 
 }
+
 
 
 #designBar1Options p{
@@ -429,6 +451,8 @@ z-index: 2000;
   font-family: Trebuchet MS,  Arial, sans-serif;
 }
 
+
+
 #designBar1Options p:hover{
   text-shadow: 0 0 10px #fff;   
 }
@@ -436,9 +460,19 @@ z-index: 2000;
 #designBar1Options .MuiSvgIcon-root:hover{
   -webkit-transform: scale(1.15);
   transform: scale(1.15);
+  cursor: pointer;
+}
+
+#designBar1Options p:nth-of-type(3),
+#designBar1Options p:nth-of-type(4)   {
+  padding-left: 50px;
 }
 
 
+#designBar1Options .MuiSlider-markLabel {
+  color: white;
+
+} 
 
 .designBar2{
   font-family: Trebuchet MS,  Arial, sans-serif;
@@ -781,6 +815,21 @@ white-space: nowrap;
   transform: scale(1.25);
 }
 
+.designBar3-tooltip{
+  visibility: hidden;
+   display: inline;
+   position: absolute;
+    color:#F43B5F;
+      top: 285px;
+      left: 55px;
+      font-size: 10px;
+      z-index: 500;
+}
+
+.designBar3:hover .designBar3-tooltip{
+  visibility: visible;
+ }
+
 
 
 .designBar4{
@@ -822,7 +871,6 @@ white-space: nowrap;
 }
 
 
-
     
 .TextBoxheader .MuiSvgIcon-root:nth-child(1){
   grid-column: 9/9;
@@ -851,27 +899,8 @@ white-space: nowrap;
 .TextBoxbody{
   display: grid;
   grid-template-columns: repeat(9, 95px);
-  grid-template-rows: repeat(2, 125px);
+  grid-template-rows: repeat(3, 125px);
   border-top: 1px solid #ccc;
-
-}
-
-
-
-.TextBoxbody .textInput{
-  grid-column: 1/6;
-  grid-row: 1/3;
-  padding: 15px 10px;
-  margin: 25px 25px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.TextBoxbody .textInput2{
-  grid-column: 6/11;
-  grid-row: 1/1;
-align-self: center;
 
 }
 
@@ -879,10 +908,36 @@ align-self: center;
   display: inline-block;
   white-space: nowrap;
 }
+
+
+.TextBoxbody .textInput{
+  grid-column: 1/6;
+  grid-row: 1/2;
+  padding: 15px 10px;
+  margin: 25px 25px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.TextBoxbody .textInput2{
+  grid-column: 6/11;
+  grid-row: 1/1;
+  align-self: center;
+
+}
+
+.textInput2 .MuiSvgIcon-root, 
+.textInput2 .MuiSelect-root {
+  border-color: #F43B5F;
+
+} 
+
  
 .TextBoxbody .textInput3{
 grid-column: 6/11;
-  grid-row: 2/3;
+  grid-row: 2/4;
 align-self: center;
 
 }
@@ -912,11 +967,11 @@ align-self: center;
 }
 
 
-.FinancialCharts{
-    grid-column: 1 /2;
-    grid-row: 1/2;
-    padding-top: 0px;
-  max-width: 200px;
+.GraphX{
+  grid-column: 1 /2;
+  grid-row: 1/2;
+  padding-top: 0px;
+  max-width: 150px;
 }
 
 
@@ -926,6 +981,21 @@ align-self: center;
     padding-top: 0px;
     max-width: 150px;
 }
+
+
+.report-tooltip2{
+  visibility: hidden;
+   display: inline;
+   position: relative;
+    color:#F43B5F;
+      top: -85px;
+      left: 100px;
+      font-size: 10px;
+}
+
+.Dashboards:hover .report-tooltip2{
+  visibility: visible;
+ }
  
 
 .Reports{
@@ -1017,17 +1087,22 @@ cursor: pointer;
  }
  
  .CreateLink{
-     grid-column:1/1;
-      grid-row: 3/3;
-      padding-left: 35%;
- font-size: 1.5rem;
+grid-column:1/1;
+grid-row: 3/3;
+padding-left: 35%;
+font-size: 1.5rem;
   background-color: #000428;
   color: aliceblue;
   cursor: pointer;
 }
 
-.CreateLink:hover {
- 
+.CreateLink a{
+color: aliceblue;
+cursor: pointer;
+}
+
+.CreateLink a:hover {
+  color: aliceblue;
   text-shadow: 0 0 10px #fff;    
  }
 
@@ -1558,15 +1633,28 @@ border-color: #000428;
   transform: scale(1.05);
 
 }
+
 /*  */
 
-  /*Hide ScrollBar*/
+  /* Hide ScrollBar */
   ::-webkit-scrollbar {
     width: 0px;
-    background: transparent; /* make scrollbar transparent */
+    background: transparent; 
+  }
+
+    /* Decorate ScrollBar */
+  .WorkSpace::-webkit-scrollbar {
+      width: 15px;
+      background: white; 
+      border-radius: 20px;      
+      border: 3px solid #F43B5F!important;
+    }
+  
+    .WorkSpace::-webkit-scrollbar-thumb:hover {
+      background: #F43B5F; 
   }
   
-
+  
   /* Dropdown for Currency */
   
   .exchange{
@@ -1607,4 +1695,13 @@ border-color: #000428;
     background: #1E222D;
     color: white;
   }
+
+
+
+
+
+
+
+
+
 
