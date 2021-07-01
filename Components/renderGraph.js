@@ -115,7 +115,8 @@ default={{
           height: height 
         }}
 
-onDragStop={(e, d) => { 
+onDragStop={ (e, d) => { 
+    
     setX(d.x)
     setY(d.y)
 
@@ -124,7 +125,7 @@ onDragStop={(e, d) => {
         const clientDb = firebaseClient.firestore();  
         
         const docref = clientDb.collection("Users").doc(props.uid)
-        .collection("Dashboard").doc("First").collection("Graphs"); 
+        .collection("Dashboard").doc(props.docID).collection("Graphs"); 
         docref.where("id" , "==", `${props.id}`)
         .get()
         .then((querySnapshot) => {
@@ -157,7 +158,7 @@ const chart = graphRef.current && graphRef.current.chart
         const clientDb = firebaseClient.firestore();  
         
         const docref = clientDb.collection("Users").doc(props.uid)
-        .collection("Dashboard").doc("First").collection("Graphs"); 
+        .collection("Dashboard").doc(props.docID).collection("Graphs"); 
         docref.where("id" , "==", `${props.id}`)
         .get()
         .then((querySnapshot) => {
@@ -187,7 +188,7 @@ if(window !== "undefined") {
 const clientDb = firebaseClient.firestore();  
 
 const docref = clientDb.collection("Users").doc(props.uid)
-.collection("Dashboard").doc("First").collection("Graphs"); 
+.collection("Dashboard").doc(props.docID).collection("Graphs"); 
 docref.where("id" , "==", `${props.id}`)
 .get()
 .then((querySnapshot) => {

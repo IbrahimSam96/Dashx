@@ -1,5 +1,5 @@
-import "../Style.css"
-import Navbar from "../Components/NavigationBar"
+import "../Style.css";
+import Navbar from "../Components/NavigationBar";
 //Firebase Authentication
 import '../FirebaseIntialization' 
 import {AuthProvider} from "../Authenticator"
@@ -7,12 +7,13 @@ import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {
 
+
  return (
 
 <>
 
 <AuthProvider>
-    
+
 <div className="Main">
 
 <Head>

@@ -107,12 +107,11 @@ return (
         Sign out
       </button> 
 
-      <Link  href= "/profile"> 
-      <span className="ProfileLink" style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
+      <span className="ProfileLink " style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
+      <a href= {`/users/${props.uid}`} style={{ textDecoration: 'none' }}>
         Profile
-      </span> 
-
-      </Link> 
+        </a>
+      </span>
     
       
       <span className="CreateLink " style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>

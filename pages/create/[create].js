@@ -1,4 +1,7 @@
-import {useEffect, useRef, useState} from "react"
+import {React, useEffect, useRef, useState} from "react"
+import nookies from "nookies";
+import { firebaseAdmin } from "../../firebaseAdmin";
+import { firebaseClient } from "../../FirebaseIntialization";
 import Checkbox from '@material-ui/core/Checkbox';
 import Slider from '@material-ui/core/Slider';
 
@@ -23,43 +26,34 @@ import { AreaChartOutlined, LineChartOutlined,
 
 import Modal from 'react-bootstrap/Modal';
 import _debounce from 'lodash.debounce';
-import CreateGraph1 from "../Components/createGraph";
-import CreateGraph2 from "../Components/renderGraph";
- import TextBox from "../Components/TextBox";
-
-
-import React from "react";
-import nookies from "nookies";
-
-import { firebaseAdmin } from "../firebaseAdmin";
-import { firebaseClient } from "../FirebaseIntialization";
-
-
+import CreateGraph1 from "../../Components/createGraph";
+import CreateGraph2 from "../../Components/renderGraph";
+ import TextBox from "../../Components/TextBox";
 
 export const getServerSideProps = async (context) => {
     try {
-      
       const cookies = nookies.get(context);
       console.log(JSON.stringify(cookies, null, 2));
       const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
       const { uid, email } = token;
 
       const db = firebaseAdmin.firestore();
+      const latestDashboard = db.collection("Users").doc(uid).collection("Dashboard").orderBy('date', 'desc').limit(1)
+      const docID = []
 
-    db.collection("Users").doc(uid).collection("Dashboard").doc("First").set({
+      await latestDashboard.get().then((snapshot) => {
+      
+        snapshot.forEach((doc) => {
+          console.log(doc.id)
+              docID.push( doc.id)
+            
+        });
+      });
 
-    })
-  .then(() => {
-  console.log("Document successfully written!");
-})
-.catch((error) => {
-  console.error("Error writing document: ", error);
-});
-      // the user is authenticated!
-      // FETCH STUFF HERE
+
   
       return {
-        props: {  email, uid , token},
+        props: {  email, uid , token, docID },
   
         // redirect: {
         //   permanent: false,
@@ -84,9 +78,10 @@ export const getServerSideProps = async (context) => {
     }
   };
 
+  
+const CreateDynamic = (props) => {
 
-const Create = (props) => {
-
+  console.log(props.docID[0])
 //Modal Options
 const [show , setShow] = useState(false); 
 const [show2 , setShow2] = useState(false); 
@@ -134,11 +129,9 @@ const [error2, setError2] = useState(false);
 
 
 
-
   const [numberofGraphs, setnumberofGraphs] = useState([]); 
 
   const [numberofText, setnumberofText] = useState([]); 
-
 
 
 
@@ -269,7 +262,7 @@ setnumberofGraphs(prevLines => (
   
       clientDb.collection("Users").doc(props.uid)
       .collection("Dashboard")
-      .doc("First").collection("Graphs").add({ 
+      .doc(props.docID[0]).collection("Graphs").add({ 
         type:type, title:title, seriestitle:seriestitle,
         legend:legend,
          xAxis:xAxis, 
@@ -646,7 +639,7 @@ if(window !== "undefined") {
 
     clientDb.collection("Users").doc(props.uid)
     .collection("Dashboard")
-    .doc("First").collection("Text").add({ 
+    .doc(props.docID[0]).collection("Text").add({ 
       text:text,
       textColor:textColor,
       bold:bold,
@@ -779,8 +772,7 @@ return (
 
 
 { numberofGraphs.map( (si, k) => (
-       
-   
+      
 <>
        <CreateGraph2
           key={si.type+si.title}
@@ -795,6 +787,7 @@ return (
            numberofGraphs={numberofGraphs}
            setnumberofGraphs={setnumberofGraphs}
            id={si.id}
+           docID={props.docID[0]}
            uid={props.uid}
            k={k}
 
@@ -823,7 +816,7 @@ return (
             numberofText={numberofText}
             setnumberofText={setnumberofText}
             uid={props.uid}
-
+            docID={props.docID[0]}
             />
           
            </>
@@ -890,7 +883,7 @@ const  div =  document.getElementById("designBar1Options");
             
               const backgroundColorRef = clientDb.collection("Users").doc(props.uid)
               .collection("Dashboard")
-              .doc("First");
+              .doc(props.docID[0]);
           
               backgroundColorRef.update({
                 backgroundColor:e.target.value
@@ -921,7 +914,7 @@ const  div =  document.getElementById("designBar1Options");
             
               const borderColorRef = clientDb.collection("Users").doc(props.uid)
               .collection("Dashboard")
-              .doc("First");
+              .doc(props.docID[0]);
           
               borderColorRef.update({
                 borderColor:e.target.value
@@ -960,7 +953,7 @@ const  div =  document.getElementById("designBar1Options");
   
     const widthref = clientDb.collection("Users").doc(props.uid)
     .collection("Dashboard")
-    .doc("First");
+    .doc(props.docID[0]);
 
     widthref.update({
       width:v
@@ -1000,7 +993,7 @@ const  div =  document.getElementById("designBar1Options");
             
               const heightref = clientDb.collection("Users").doc(props.uid)
               .collection("Dashboard")
-              .doc("First");
+              .doc(props.docID[0]);
           
               heightref.update({
                 height:v
@@ -1033,6 +1026,7 @@ Widgets
 Text 
 <TextFormatIcon onClick={ ()=> setShow3(true) }/> 
 </span>
+
 </div>
 
 {recentTrades}
@@ -1076,4 +1070,4 @@ null
 
 }
 
-export default Create; 
+export default CreateDynamic;

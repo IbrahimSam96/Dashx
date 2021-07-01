@@ -33,7 +33,7 @@ const TextBox = (props) => {
                 const clientDb = firebaseClient.firestore();  
                 
                 const docref = clientDb.collection("Users").doc(props.uid)
-                .collection("Dashboard").doc("First").collection("Text"); 
+                .collection("Dashboard").doc(props.docID).collection("Text"); 
                 docref.where("id" , "==", `${props.text}${props.textColor}`)
                 .get()
                 .then((querySnapshot) => {
@@ -60,7 +60,7 @@ const TextBox = (props) => {
                 const clientDb = firebaseClient.firestore();  
                 
                 const docref = clientDb.collection("Users").doc(props.uid)
-                .collection("Dashboard").doc("First").collection("Text"); 
+                .collection("Dashboard").doc(props.docID).collection("Text"); 
                 docref.where("id" , "==", `${props.text}${props.textColor}`)
                 .get()
                 .then((querySnapshot) => {
@@ -88,7 +88,7 @@ const TextBox = (props) => {
            const clientDb = firebaseClient.firestore();  
    
           const docref = clientDb.collection("Users").doc(props.uid)
-            .collection("Dashboard").doc("First").collection("Text"); 
+            .collection("Dashboard").doc(props.docID).collection("Text"); 
             docref.where("id" , "==", `${props.text}${props.textColor}`)
             .get()
             .then((querySnapshot) => {
