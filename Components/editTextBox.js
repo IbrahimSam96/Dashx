@@ -4,7 +4,7 @@ import { firebaseClient } from "../FirebaseIntialization";
 import CloseIcon from '@material-ui/icons/Close';
 import { Rnd } from "react-rnd";
 
-const TextBox = (props) => { 
+const EditTextBox = (props) => { 
 
     const [x, setX]= useState(0);
     const [y, setY]= useState(0);
@@ -18,10 +18,10 @@ const TextBox = (props) => {
         <Rnd 
         bounds="parent"
         default={{
-            x: 50,
-            y: 5,
-            width: width,
-            height: height 
+            x: props.x,
+            y: props.y,
+            width: props.width,
+            height: props.height 
           }}
 
           onDragStop={(e, d) => { 
@@ -80,9 +80,9 @@ const TextBox = (props) => {
         <CloseIcon  
         onClick={ () => {
 
-          const newtext = props.numberofText.filter( (object, kk) =>  object.id !== `${props.text}${props.textColor}${props.textSize}` ) 
+          const newtext = props.existingText.filter( (object, kk) =>  object.id !== `${props.text}${props.textColor}${props.textSize}` ) 
          
-          props.setnumberofText(newtext);
+          props.setexistingText(newtext);
  
           if(window !== "undefined") {
  
@@ -122,4 +122,4 @@ const TextBox = (props) => {
 
   }
 
-  export default TextBox;
+  export default EditTextBox;

@@ -200,6 +200,7 @@ return (
 <div className="DashboardPage3" style={{
     backgroundColor:`${layout.backgroundColor}`,
     width:`${layout.width}px`,
+    height: `${layout.height}px`,
     borderColor:`${layout.borderColor}`
 }} >
 
@@ -244,6 +245,8 @@ return (
         textSize={si.textSize}
         x={si.x}
         y={si.y}
+        width={si.width}
+        height={si.height}
         />
       
        </>
@@ -267,6 +270,7 @@ return (
  
 </div>
 
+<span className="EditInfo"> <a href={`/edit/${props.uid}/${props.routeG}`}> Edit </a></span>
 </>
 
 :
@@ -284,6 +288,8 @@ return (
 <span>Created</span>
 
 <span> {moment(createdDate).fromNow()}</span>
+
+
 
 </div>
     :

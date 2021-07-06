@@ -6,14 +6,14 @@ import { firebaseClient } from "../FirebaseIntialization";
 import CloseIcon from '@material-ui/icons/Close';
 import { Rnd } from "react-rnd";
 
-const CreateGraph2 = (props) => {
+const EditGraph = (props) => {
 
 
 var arr = [];
     
 for (var i = 0; i < props.data.length;  i += 2) {
     
-arr[i] =  [props.data[i][1] , Number(props.data[i+1][1]) ] 
+arr[i] =  [props.data[i] , Number(props.data[i+1]) ] 
 
 }
 
@@ -39,8 +39,8 @@ const [option, setOption] = useState({
         enabled: false
     },
     chart: {
-        height:height,
-        width: width,
+        height:props.height,
+        width: props.width,
         // renderTo:"createdGraph", 
         backgroundColor: "transparent", 
     },
@@ -110,10 +110,10 @@ return (
 <Rnd 
 bounds="parent"
 default={{
-          x: x,
-          y: y,
-          width: width,
-          height: height 
+          x: props.x,
+          y: props.y,
+          width: props.width,
+          height: props.height 
         }}
 
 onDragStop={ (e, d) => { 
@@ -200,8 +200,8 @@ docref.where("id" , "==", `${props.id}`)
 
 }  
 
-const newgraphs = props.numberofGraphs.filter( (object, kk) => `${object.id}` !== `${props.id}`); 
-props.setnumberofGraphs(newgraphs);
+const newgraphs = props.existingGraphs.filter( (object, kk) => `${object.id}` !== `${props.id}`); 
+props.setexistingGraphs(newgraphs);
 
 }}
 style={{color:"#c7c9d3", 
@@ -218,4 +218,4 @@ fontSize:"1.5rem"}}
 
 
 
-export default CreateGraph2 ; 
+export default EditGraph ; 

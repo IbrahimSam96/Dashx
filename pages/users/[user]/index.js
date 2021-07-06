@@ -1,8 +1,12 @@
 import { firebaseAdmin } from "../../../FirebaseAdmin";
 import nookies from "nookies";
 import moment from 'moment';
-// import CloseIcon from '@material-ui/icons/Close';
-// import { firebaseClient } from "../../../FirebaseIntialization";
+import AddIcon from '@material-ui/icons/Add';
+
+import CloseIcon from '@material-ui/icons/Close';
+import { firebaseClient } from "../../../FirebaseIntialization";
+
+import React, { useEffect, useState, useRef } from "react";
 
 export const getServerSideProps = async (context) => {
 
@@ -82,17 +86,21 @@ export const getServerSideProps = async (context) => {
 
         await Promise.all( Dashboards.map( async (obj) => {
 
-          const  layoutRef =  db.collection("Users").doc(context.query.user).collection("Dashboard")
+          const layoutRef =  db.collection("Users").doc(context.query.user).collection("Dashboard")
           .doc(obj);
 
           await layoutRef.get().then((doc) => {
+
             if(doc.exists) {
+
               Layout.push(JSON.stringify(doc.data() ) ) 
                     console.log( doc.data() )
                              
                              }
         }) 
+
         }) 
+
         ) 
   
 
@@ -124,24 +132,42 @@ export const getServerSideProps = async (context) => {
     }
   };
 
-
-
 const UserProfile1 = (props) => {
 
-   const createdDates = [ ]; 
+  const createdDates = []; 
 
-  props.Layout.map((obj) =>{ 
+  const Combined = []; 
+
+  props.Layout.map((obj) => { 
+
     createdDates.push( new Date(JSON.parse(obj).date._seconds * 1000) )
+
   })
 
   const desDates = createdDates.sort( (a , b) => { return b - a} )
+
+  const [CombinedDashboards, setCombinedDashboards] = useState(Combined)
+
+
+
+  for(var i = 0 ; i < props.Dashboards.length; i++) {
+    Combined.push({
+      dashboard: props.Dashboards[i],
+      [props.Dashboards[i]]: moment(desDates[i]).fromNow()
+    })
   
-  console.log( moment(desDates[0] ).fromNow() )
+  }
 
-// props.Layout.map((obj) => {
 
-//   console.log( moment(new Date(JSON.parse(obj).date._seconds  * 1000) ).fromNow() )
-// })
+
+console.log(CombinedDashboards, "Combined STATE")
+
+console.log(desDates, "desDates")
+
+console.log(props.Dashboards, "Dashboards")
+
+
+// console.log( moment(new Date(JSON.parse(obj).date._seconds  * 1000) ).fromNow() )
 
 
 return (
@@ -167,7 +193,7 @@ props.userinfo[0].name ?
 }
 
 
-<span> <a href="/create"> New Dashboard</a>  </span>
+<span> <AddIcon /> <a href="/create"> New Dashboard</a>  </span>
 
 
 </div>
@@ -176,27 +202,34 @@ props.userinfo[0].name ?
 
 {props.Dashboards.length ? 
 
-props.Dashboards.map( (obj, k ) => ( 
-
+CombinedDashboards.map(( obj , k) => ( 
 
 <div className="DashboardTile" > 
 
-<span> {k} </span>
+<span> {k+1} </span>
 
-<span> <a key={k} href={`/users/${props.route}/${obj}`}> {obj} </a> </span>
+<span> <a key={k} href={`/users/${props.route}/${obj.dashboard}`}> {obj.dashboard} </a> </span>
 
-<span> <p> {moment(desDates[k] ).fromNow()} </p> </span>
+<span> <p> {obj[`${obj.dashboard}`]} </p> </span>
 
-{/* <span> <CloseIcon onclick={ async () => {
+<span> <a href={`/edit/${props.uid}/${obj.dashboard}`}> Edit </a> </span>
+
+ <span> <CloseIcon onClick={ async () => {
+
+ console.log("tried")
+
+const newSetofDashboards = CombinedDashboards.filter( (obj1 ) =>  obj1.dashboard !== obj.dashboard )
+
+setCombinedDashboards(newSetofDashboards)
 
 if(window !== "undefined") {
  
   const clientDb = firebaseClient.firestore();  
 
  const docref = clientDb.collection("Users").doc(props.uid)
-   .collection("Dashboard").doc(obj); 
+   .collection("Dashboard").doc(obj.dashboard); 
    
-  await docref.delete().then(() => {
+   await docref.delete().then(() => {
     console.log("Document successfully deleted!");
 }).catch((error) => {
     console.error("Error removing document: ", error);
@@ -204,12 +237,19 @@ if(window !== "undefined") {
 
 
     }
-}} ></CloseIcon> </span> */}
+}} ></CloseIcon> </span>
+
 </div>
- ))
+  ))
 
 :
-<span> No dashboards created </span>
+
+
+<div className="NoDashboardTitle" > 
+
+<span > No dashboards created </span>
+
+ </div>
 
 }
 

@@ -127,19 +127,14 @@ const [textSize , settextSize] = useState(1.2);
 const [error, setError] = useState(false);
 const [error2, setError2] = useState(false);
 
+const [numberofGraphs, setnumberofGraphs] = useState([]); 
 
-
-  const [numberofGraphs, setnumberofGraphs] = useState([]); 
-
-  const [numberofText, setnumberofText] = useState([]); 
-
-
+const [numberofText, setnumberofText] = useState([]); 
 
 
 
 
   const handleClick = () => {
-
    const newRows = new Map(data);
    newRows.set(`datapoint${[newRows.size + 1 ]}`, "");
    newRows.set(`datapoint${[newRows.size + 1 ]}`, "");
@@ -183,7 +178,7 @@ const value = document.getElementById("chartseriescolor").value;
 
 setColor(value)
 
-}, 200) ;
+}, 200);
 
 
 const changetooltipcolor = _debounce(() => {
