@@ -31,6 +31,7 @@ import TextBox from "../../../../Components/TextBox";
 
 import EditGraph from "../../../../Components/editGraph";
 import ViewTextBox from "../../../../Components/editTextBox";
+import CreateTextBox from "../../../../Components/createTetBox";
 
 export const getServerSideProps = async (context) => {
 
@@ -771,6 +772,13 @@ const [existingText, setexistingText] = useState(props.Texts);
      </Modal.Header>
      
      <Modal.Body  bsPrefix="TextBoxbody" >
+
+
+     <CreateTextBox text={text} textColor={textColor} 
+  bold={bold} italic={italic}
+  underline={underline} justify={justify} textSize={textSize}
+  center={center}
+   id={text+textColor+textSize} /> 
      
      <input className="textInput" 
      id="textInput"

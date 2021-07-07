@@ -29,6 +29,7 @@ import _debounce from 'lodash.debounce';
 import CreateGraph1 from "../../Components/createGraph";
 import CreateGraph2 from "../../Components/renderGraph";
  import TextBox from "../../Components/TextBox";
+import CreateTextBox from "../../Components/createTetBox";
 
 export const getServerSideProps = async (context) => {
     try {
@@ -661,6 +662,12 @@ float:"right"}} />
 </Modal.Header>
 
 <Modal.Body  bsPrefix="TextBoxbody" >
+
+  <CreateTextBox className="TextArea" text={text} textColor={textColor} 
+  bold={bold} italic={italic}
+  underline={underline} justify={justify} textSize={textSize}
+  center={center}
+   id={text+textColor+textSize} /> 
 
 <input className="textInput" 
 id="textInput"

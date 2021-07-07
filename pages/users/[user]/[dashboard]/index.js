@@ -1,4 +1,6 @@
 import { firebaseAdmin } from "../../../../FirebaseAdmin";
+
+import {React, useEffect, useRef, useState} from "react"
 import nookies from "nookies";
 import ViewGraph from "../../../../Components/viewGraph";
 
@@ -6,6 +8,8 @@ import ViewTextBox from "../../../../Components/viewText";
 
 import {TwitterIcon,LinkedinIcon,WhatsappIcon,RedditIcon} from "react-share";
 import moment from 'moment';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Modal from 'react-bootstrap/Modal';
 
 export const getServerSideProps = async (context) => {
 
@@ -185,13 +189,40 @@ const createdDate = new Date(layout.date._seconds * 1000)
 
 console.log(moment(createdDate).fromNow())
 
+const [show3 , setShow3] = useState(false); 
+
+const Present = ( 
+    <>
+    <Modal 
+    show={show3}
+    style={{opacity:3}}
+    onHide={ () => setShow3(false) } >
+
+<Modal.Header bsPrefix="PresentDashboard" >
+
+
+</Modal.Header>
+
+<Modal.Body  bsPrefix="PresentDashboardBody" >
+
+
+</Modal.Body>
+
+</Modal>
+  </>
+  );
+
+
 return (
-    
+
+
 <div className="DashboardPage" >
+
 
 { props.dashboardexists? 
 
 <>
+
 
 <div className="DashboardPage1">
 
@@ -261,19 +292,26 @@ return (
 
 </div>
 
+
 <div className="CreatorInfo">
 
 <TwitterIcon href={`https://localhost:3000/users/${props.routeU}/${props.routeD}`}size={32} round={true} />
 <LinkedinIcon href={`https://localhost:3000/users/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
 <WhatsappIcon href={`https://localhost:3000/users/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
 <RedditIcon href={`https://localhost:3000/users/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
+
  
 </div>
 
 <span className="EditInfo"> <a href={`/edit/${props.uid}/${props.routeG}`}> Edit </a></span>
+
+<span className="EditInfo2"> <VisibilityIcon /> </span>
+
+
 </>
 
 :
+
 <>
 
 </>
@@ -303,7 +341,10 @@ return (
     
     }
 
+
     </div>
+
+    
     )
     
     }

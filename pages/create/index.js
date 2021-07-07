@@ -1,7 +1,7 @@
 import React from "react";
 import nookies from "nookies";
 import { firebaseAdmin } from "../../firebaseAdmin";
-
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 export const getServerSideProps = async (context) => {
     try {
         const cookies = nookies.get(context);
@@ -103,14 +103,18 @@ const Create = (props) => {
     console.log(props.dashboards)
 
     return (
+<div className="ExceededPage ">
 
         <div className="MaximumDashboards" >
 
             <span> Sorry you have exceded the limit of {props.dashboards.length} dashboards. </span>
 
             <span> Create a new account or Upgrade to a premium account. </span>
-            <span> <a href={`/users/${props.uid}`}> Go back to profile</a> </span>
 
+            <span> <a href={`/users/${props.uid}`}> <KeyboardBackspaceIcon style={{fontSize:"2.5rem"}}/> </a> </span>
+
+
+        </div>
         </div>
     )
 }
