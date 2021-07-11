@@ -186,6 +186,7 @@ const [show3 , setShow3] = useState(false);
 
 // Graph Styles or Data
 const [style, setStyle] = useState(true);
+const [GoogleSheets, setGoogleSheets] = useState(false)
 
 const [data, setData] = useState( 
     new Map( 
@@ -208,6 +209,14 @@ const [tooltipcolor, settooltipColor] = useState("black");
 const [tooltiptextcolor, settooltiptextColor] = useState("white");
 const [axisColor, setaxisColor] = useState("white");
 const [legend, setLegend] = useState(false); 
+
+
+const [googleSheetKey, setgoogleSheetKey] = useState("");
+const [googleSheetNumber, setgoogleSheetNumber] = useState("");
+const [googleSheetStartColumn, setgoogleSheetStartColumn] = useState("");
+const [googleSheetEndColumn, setgoogleSheetEndColumn] = useState("");
+const [googleSheetStartRow, setgoogleSheetStartRow] = useState("");
+
 
 // Text options
 const [text , setText] = useState("");
@@ -353,6 +362,11 @@ const [existingText, setexistingText] = useState(props.Texts);
                  tooltipcolor:tooltipcolor,
                  tooltiptextcolor:tooltiptextcolor,
                  axisColor:axisColor,
+                 gk:googleSheetKey,
+                 gs:googleSheetNumber,
+                 gsc:googleSheetStartColumn,
+                 gec:googleSheetEndColumn,
+                 gsr:googleSheetStartRow,
                  id:type+title+color+xAxis+yAxis,
                  data:[...data],
                  
@@ -377,6 +391,11 @@ const [existingText, setexistingText] = useState(props.Texts);
              tooltipcolor:tooltipcolor,
              tooltiptextcolor:tooltiptextcolor,
              axisColor:axisColor,
+             gk:googleSheetKey,
+             gs:googleSheetNumber,
+             gsc:googleSheetStartColumn,
+             gec:googleSheetEndColumn,
+             gsr:googleSheetStartRow,
              id:type+title+color+xAxis+yAxis,
              data: [...data.values()]
          })  
@@ -449,7 +468,9 @@ const [existingText, setexistingText] = useState(props.Texts);
        key={[type, title, 
          legend, xAxis, yAxis, color, 
          tooltipcolor, tooltiptextcolor, 
-         axisColor, [...data], 
+         axisColor, googleSheetKey,
+         googleSheetNumber,googleSheetStartColumn,
+         googleSheetEndColumn,googleSheetStartRow, [...data], 
          seriestitle ]}
         type={type} title={title} seriestitle={seriestitle}
         legend={legend} xAxis={xAxis} 
@@ -458,6 +479,11 @@ const [existingText, setexistingText] = useState(props.Texts);
         tooltipcolor={tooltipcolor}
         tooltiptextcolor={tooltiptextcolor}
         axisColor={axisColor}
+        gk={googleSheetKey}
+        gs={googleSheetNumber}
+        gsc={googleSheetStartColumn}
+        gec={googleSheetEndColumn}
+        gsr={googleSheetStartRow}
         data={[...data]}
         /> 
      
@@ -624,73 +650,152 @@ const [existingText, setexistingText] = useState(props.Texts);
      }
      
      <Modal 
-         show={show2}
-         style={{opacity:3}}
-         onHide={ () => setShow2(false) } >
-     
-     <Modal.Header bsPrefix="DataBoxheader" >
-     
-     <span className="DataBoxheader1" onClick={handleClick}> 
-     Add Fields 
-     </span>
-     
-     <span className="DataBoxheader2" onClick={handleDelete}> 
-     Remove Fields
-     </span>
-     
-     <CloseIcon onClick={() => setShow2(false) } 
-         style={{color:"#c7c9d3", 
-         float:"right"}}/>
-     
-     
-     
-     </Modal.Header>
-     
-     <Modal.Body  bsPrefix="DataBoxbody" >
-     
-     <input className="inputseriestitle" 
-     id="inputseriestitle"
-        type="text" 
-        value={seriestitle} 
-        placeholder="Series Title (Optional)" 
-        onInput={ (e) => { 
-          if(e.target.value.length > 55 ){
-           setError(true)
-            console.log("too Long 7bb <3")
-            setseriesTitle("")
-          }
-          else{
-           console.log(e.target.value)
-           setseriesTitle(e.target.value)
-        
-     
-          }
-        }} />
-     
-     <div className="DataBoxbody1" >
-     
-           {[...data.keys()].map((datapoint) => {
-             return (
-               <input
-               className="inputboxes"
-               id={datapoint}
-                value={data.get(datapoint) }
-                 key={datapoint}
-                 onChange={handleChange(datapoint)}
-               />
-             );
-     
-           }
-           
-           )}
-     
-     </div>
-     
-     
-     </Modal.Body>
-     
-     </Modal>
-     
+    show={show2}
+    style={{opacity:3}}
+    onHide={ () => setShow2(false) } >
+
+<Modal.Header bsPrefix="DataBoxheader" >
+
+{!GoogleSheets? 
+
+<>
+<span className="DataBoxheader1" onClick={handleClick}> 
+Add Fields 
+</span>
+
+<span className="DataBoxheader2" onClick={handleDelete}> 
+Remove Fields
+</span>
+
+<span  className="DataBoxheader3"> 
+
+<span onClick={ () => {
+  setGoogleSheets(!GoogleSheets)
+}}> 
+  Connect Google Sheets  </span>
+
+</span>
+
+</>
+:
+
+<span  className="DataBoxheader3"> 
+
+<span onClick={ () => {
+  setGoogleSheets(!GoogleSheets)
+}}> 
+   Raw Data  </span>
+
+</span>
+}
+
+<CloseIcon onClick={() => setShow2(false) } 
+    style={{color:"#c7c9d3", 
+    float:"right"}}/>
+
+</Modal.Header>
+
+<Modal.Body  bsPrefix="DataBoxbody" >
+<span ><p>Series Title</p> </span>
+<input className="inputseriestitle" 
+id="inputseriestitle"
+   type="text" 
+   value={seriestitle} 
+   placeholder="Series Title (Optional)" 
+   onInput={ (e) => { 
+     if(e.target.value.length > 55 ){
+      setError(true)
+       console.log("too Long 7bb <3")
+       setseriesTitle("")
+     }
+     else{
+      console.log(e.target.value)
+      setseriesTitle(e.target.value)
+   
+     }
+   }} />
+
+{!GoogleSheets ? 
+ 
+<div className="DataBoxbody1" >
+
+{[...data.keys()].map((datapoint) => {
+  return (
+    <input
+    className="inputboxes"
+    id={datapoint}
+     value={data.get(datapoint) }
+      key={datapoint}
+      onChange={handleChange(datapoint)}
+    />
+  );
+
+}
+
+)}
+
+</div>
+
+:
+
+<div className="DataBoxbody2" >
+<p>Google Sheet Key</p>
+<input className="InputGoogleSheetsKey" 
+id="InputGoogleSheetsKey"
+   type="text" 
+   value={googleSheetKey} 
+   placeholder="Required(*)" 
+   onInput={ (e) => { 
+    setgoogleSheetKey(e.target.value)
+   }} />
+
+<p>Sheet Number</p>
+<input className="InputGoogleSheetNumber" 
+id="InputGoogleSheetNumber"
+   type="text" 
+   value={googleSheetNumber} 
+   placeholder="Optional" 
+   onInput={ (e) => { 
+    setgoogleSheetNumber(e.target.value)
+   }} />
+<p>Column Number Start</p>
+<input className="InputGoogleSheetStartColumn" 
+id="InputGoogleSheetStartColumn"
+   type="text" 
+   value={googleSheetStartColumn} 
+   placeholder="Optional " 
+   onInput={ (e) => { 
+    setgoogleSheetStartColumn(e.target.value)
+   }} />
+<p>Column Number End</p>
+<input className="InputGoogleSheetEndColumn" 
+id="InputGoogleSheetEndColumn"
+   type="text" 
+   value={googleSheetEndColumn} 
+   placeholder="Optional " 
+   onInput={ (e) => { 
+    setgoogleSheetEndColumn(e.target.value)
+   }} />
+<p>Row Number Start</p>
+<input className="InputGoogleSheetStartRow" 
+id="InputGoogleSheetStartRow"
+   type="text" 
+   value={googleSheetStartRow} 
+   placeholder="Optional " 
+   onInput={ (e) => { 
+    setgoogleSheetStartRow(e.target.value)
+   }} />
+
+</div>
+
+}
+
+
+
+
+</Modal.Body>
+
+</Modal>
      
      </Modal.Body>
      
@@ -876,14 +981,13 @@ return(
     
     <div className="gongas" >
 
-        <div className="jojo" >
-
+    <div className="jojo" >
 
 <div className="WorkSpace" id="WorkSpace"  style={{
     backgroundColor:`${layout.backgroundColor}`,
     width:`${layout.width}px`,
     borderColor:`${layout.borderColor}`,
-    height:`${layout.height}`
+    height:`${layout.height}px`
 }} >
 
 { existingGraphs.map( (si, k) => (
@@ -898,6 +1002,11 @@ return(
                  tooltipcolor={si.tooltipcolor}
                  tooltiptextcolor={si.tooltiptextcolor}
                  axisColor={si.axisColor}
+                 gk={si.gk}
+                 gs={si.gs}
+                 gsc={si.gsc}
+                 gec={si.gec}
+                 gsr={si.gsr}
                  data={si.data}
                  existingGraphs={existingGraphs}
                  setexistingGraphs={setexistingGraphs}
@@ -957,6 +1066,11 @@ return(
                  tooltipcolor={si.tooltipcolor}
                  tooltiptextcolor={si.tooltiptextcolor}
                  axisColor={si.axisColor}
+                 gk={si.gk}
+                 gs={si.gs}
+                 gsc={si.gsc}
+                 gec={si.gec}
+                 gsr={si.gsr}
                  data={si.data}
                  numberofGraphs={numberofGraphs}
                  setnumberofGraphs={setnumberofGraphs}
@@ -1242,3 +1356,72 @@ null
   }
 
   export default EditPage
+
+
+//   <Modal 
+//   show={show2}
+//   style={{opacity:3}}
+//   onHide={ () => setShow2(false) } >
+
+// <Modal.Header bsPrefix="DataBoxheader" >
+
+// <span className="DataBoxheader1" onClick={handleClick}> 
+// Add Fields 
+// </span>
+
+// <span className="DataBoxheader2" onClick={handleDelete}> 
+// Remove Fields
+// </span>
+
+// <CloseIcon onClick={() => setShow2(false) } 
+//   style={{color:"#c7c9d3", 
+//   float:"right"}}/>
+
+
+
+// </Modal.Header>
+
+// <Modal.Body  bsPrefix="DataBoxbody" >
+
+// <input className="inputseriestitle" 
+// id="inputseriestitle"
+//  type="text" 
+//  value={seriestitle} 
+//  placeholder="Series Title (Optional)" 
+//  onInput={ (e) => { 
+//    if(e.target.value.length > 55 ){
+//     setError(true)
+//      console.log("too Long 7bb <3")
+//      setseriesTitle("")
+//    }
+//    else{
+//     console.log(e.target.value)
+//     setseriesTitle(e.target.value)
+ 
+
+//    }
+//  }} />
+
+// <div className="DataBoxbody1" >
+
+//     {[...data.keys()].map((datapoint) => {
+//       return (
+//         <input
+//         className="inputboxes"
+//         id={datapoint}
+//          value={data.get(datapoint) }
+//           key={datapoint}
+//           onChange={handleChange(datapoint)}
+//         />
+//       );
+
+//     }
+    
+//     )}
+
+// </div>
+
+
+// </Modal.Body>
+
+// </Modal>

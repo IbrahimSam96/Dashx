@@ -5,7 +5,13 @@ import HightchartsReact from "highcharts-react-official";
 import { firebaseClient } from "../FirebaseIntialization";
 import CloseIcon from '@material-ui/icons/Close';
 import { Rnd } from "react-rnd";
+import data from "highcharts/modules/data";
 
+
+if (typeof Highcharts === 'object') {
+    data(Highcharts); // Execute the data module
+
+}
 const CreateGraph2 = (props) => {
 
 
@@ -69,6 +75,13 @@ const [option, setOption] = useState({
             }
         },
     }, 
+    data: {
+        googleSpreadsheetKey: props.gk,
+        googleSpreadsheetWorksheet:props.gs,
+        startColumn: props.gsc,
+        endColumn: props.gec,
+        startRow:props.gsr,
+    },
     series: [{
         name:props.seriestitle,
         type: props.type,

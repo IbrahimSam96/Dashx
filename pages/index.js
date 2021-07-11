@@ -8,6 +8,8 @@ import nookies from "nookies";
 
 // Admin service account/ FirebaseSDK 
 import { firebaseAdmin } from "../firebaseAdmin";
+
+
 //  Components
 import LineGraph from "../Components/Linegraph"
 import BarGraph from "../Components/GoogleSheets"
@@ -22,6 +24,9 @@ const LivePortfolioGraph = dynamic( () => {
   }, {ssr: false}
   
 );
+
+
+
 
 
 export const getServerSideProps = async (context) => {
@@ -68,6 +73,7 @@ db.collection("Users").doc(uid).set({
 
 
 const Main = (props) => {
+
 
   console.log(props)
 

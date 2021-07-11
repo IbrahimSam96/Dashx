@@ -2,6 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 import Highcharts from "highcharts";
 import HightchartsReact from "highcharts-react-official";
 import { Rnd } from "react-rnd";
+import data from "highcharts/modules/data";
+
+
+if (typeof Highcharts === 'object') {
+    data(Highcharts); // Execute the data module
+
+}
+
 
 const ViewGraph = (props) => {
 
@@ -63,6 +71,13 @@ const [option, setOption] = useState({
             }
         },
     }, 
+    data: {
+        googleSpreadsheetKey: props.gk,
+        googleSpreadsheetWorksheet:props.gs,
+        startColumn: props.gsc,
+        endColumn: props.gec,
+        startRow:props.gsr,
+    },
     series: [{
         name:props.seriestitle,
         type: props.type,

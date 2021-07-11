@@ -248,6 +248,11 @@ return (
                  tooltipcolor={si.tooltipcolor}
                  tooltiptextcolor={si.tooltiptextcolor}
                  axisColor={si.axisColor}
+                 gk={si.gk}
+                 gs={si.gs}
+                 gsc={si.gsc}
+                 gec={si.gec}
+                 gsr={si.gsr}
                  data={si.data}
                  x={si.x}
                  y={si.y}
@@ -295,10 +300,10 @@ return (
 
 <div className="CreatorInfo">
 
-<TwitterIcon href={`https://localhost:3000/users/${props.routeU}/${props.routeD}`}size={32} round={true} />
-<LinkedinIcon href={`https://localhost:3000/users/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
-<WhatsappIcon href={`https://localhost:3000/users/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
-<RedditIcon href={`https://localhost:3000/users/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
+<TwitterIcon href={`https://localhost:3000/${props.routeU}/${props.routeD}`}size={32} round={true} />
+<LinkedinIcon href={`https://localhost:3000/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
+<WhatsappIcon href={`https://localhost:3000/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
+<RedditIcon href={`https://localhost:3000/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
 
  
 </div>

@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HightchartsReact from "highcharts-react-official";
+import data from "highcharts/modules/data";
+
+
+if (typeof Highcharts === 'object') {
+    data(Highcharts); // Execute the data module
+
+}
 
 const CreateGraph1 = (props) => {
 
@@ -13,6 +20,7 @@ const CreateGraph1 = (props) => {
 
     }
 
+console.log(props.gk,props.gs,props.gsc,props.gec,props.gsr )
 
 
 const [option, setOption] = useState({ 
@@ -63,11 +71,19 @@ const [option, setOption] = useState({
             }
         },
     }, 
+    data: {
+        googleSpreadsheetKey: props.gk,
+        googleSpreadsheetWorksheet:props.gs,
+        startColumn: props.gsc,
+        endColumn: props.gec,
+        startRow:props.gsr,
+    },
     series: [{
         name:props.seriestitle,
         type: props.type,
         color:props.color,
         data: arr.filter(item => item)
+       
     }
 ],
 
@@ -84,6 +100,7 @@ const [option, setOption] = useState({
      },
 })
 
+
 const renderHighChartCard = (
 
 <HightchartsReact
@@ -98,14 +115,10 @@ options={option}
 
 return (
 
-<div style={{
-          position:"relative",
-          left:`${props.positionX}px`,
-        }}> 
+<div style={{ position:"relative"}}> 
 
 {renderHighChartCard}
         
-{/* <buttton onClick={} />  */}
 </div>
 
 );

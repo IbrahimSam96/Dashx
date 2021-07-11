@@ -1,4 +1,5 @@
 import {React, useEffect, useRef, useState} from "react"
+import Image from 'next/image'
 import nookies from "nookies";
 import { firebaseAdmin } from "../../firebaseAdmin";
 import { firebaseClient } from "../../FirebaseIntialization";
@@ -82,14 +83,15 @@ export const getServerSideProps = async (context) => {
   
 const CreateDynamic = (props) => {
 
-  console.log(props.docID[0])
+  
+
 //Modal Options
 const [show , setShow] = useState(false); 
 const [show2 , setShow2] = useState(false); 
 const [show3 , setShow3] = useState(false); 
 // Graph Styles or Data
 const [style, setStyle] = useState(true);
-
+const [GoogleSheets, setGoogleSheets] = useState(false)
 //Graph Options
 
 const [data, setData] = useState( 
@@ -114,6 +116,11 @@ const [tooltiptextcolor, settooltiptextColor] = useState("white");
 const [axisColor, setaxisColor] = useState("white");
 const [legend, setLegend] = useState(false); 
 
+const [googleSheetKey, setgoogleSheetKey] = useState("");
+const [googleSheetNumber, setgoogleSheetNumber] = useState("");
+const [googleSheetStartColumn, setgoogleSheetStartColumn] = useState("");
+const [googleSheetEndColumn, setgoogleSheetEndColumn] = useState("");
+const [googleSheetStartRow, setgoogleSheetStartRow] = useState("");
 // Text options
 const [text , setText] = useState("");
 const [textColor , setTextColor] = useState("white");
@@ -243,6 +250,11 @@ setnumberofGraphs(prevLines => (
             tooltipcolor:tooltipcolor,
             tooltiptextcolor:tooltiptextcolor,
             axisColor:axisColor,
+            gk:googleSheetKey,
+            gs:googleSheetNumber,
+            gsc:googleSheetStartColumn,
+            gec:googleSheetEndColumn,
+            gsr:googleSheetStartRow,
             id:type+title+color+xAxis+yAxis,
             data:[...data],
             
@@ -267,6 +279,11 @@ setnumberofGraphs(prevLines => (
         tooltipcolor:tooltipcolor,
         tooltiptextcolor:tooltiptextcolor,
         axisColor:axisColor,
+        gk:googleSheetKey,
+        gs:googleSheetNumber,
+        gsc:googleSheetStartColumn,
+        gec:googleSheetEndColumn,
+        gsr:googleSheetStartRow,
         id:type+title+color+xAxis+yAxis,
         data: [...data.values()]
     })  
@@ -336,10 +353,12 @@ style={{color:"#c7c9d3",
 <div className="GraphArea"  id="GraphArea">
 
   <CreateGraph1 
-  key={[type, title, 
+  key={[type, , 
     legend, xAxis, yAxis, color, 
     tooltipcolor, tooltiptextcolor, 
-    axisColor, [...data], 
+    axisColor, [...data], googleSheetKey,
+    googleSheetNumber,googleSheetStartColumn,
+    googleSheetEndColumn,googleSheetStartRow,
     seriestitle ]}
    type={type} title={title} seriestitle={seriestitle}
    legend={legend} xAxis={xAxis} 
@@ -348,6 +367,11 @@ style={{color:"#c7c9d3",
    tooltipcolor={tooltipcolor}
    tooltiptextcolor={tooltiptextcolor}
    axisColor={axisColor}
+   gk={googleSheetKey}
+   gs={googleSheetNumber}
+   gsc={googleSheetStartColumn}
+   gec={googleSheetEndColumn}
+   gsr={googleSheetStartRow}
    data={[...data]}
    /> 
 
@@ -520,6 +544,9 @@ null
 
 <Modal.Header bsPrefix="DataBoxheader" >
 
+{!GoogleSheets? 
+
+<>
 <span className="DataBoxheader1" onClick={handleClick}> 
 Add Fields 
 </span>
@@ -528,21 +555,41 @@ Add Fields
 Remove Fields
 </span>
 
+<span  className="DataBoxheader3"> 
+
+<span onClick={ () => {
+  setGoogleSheets(!GoogleSheets)
+}}> 
+  Connect Google Sheets  </span>
+
+</span>
+
+</>
+:
+
+<span  className="DataBoxheader3"> 
+
+<span onClick={ () => {
+  setGoogleSheets(!GoogleSheets)
+}}> 
+   Raw Data  </span>
+
+</span>
+}
+
 <CloseIcon onClick={() => setShow2(false) } 
     style={{color:"#c7c9d3", 
     float:"right"}}/>
 
-
-
 </Modal.Header>
 
 <Modal.Body  bsPrefix="DataBoxbody" >
-
+<span ><p>Series Title</p> </span>
 <input className="inputseriestitle" 
 id="inputseriestitle"
    type="text" 
    value={seriestitle} 
-   placeholder="Series Title (Optional)" 
+   placeholder="Optional" 
    onInput={ (e) => { 
      if(e.target.value.length > 55 ){
       setError(true)
@@ -553,28 +600,117 @@ id="inputseriestitle"
       console.log(e.target.value)
       setseriesTitle(e.target.value)
    
-
      }
    }} />
 
+{!GoogleSheets ? 
+ 
 <div className="DataBoxbody1" >
 
-      {[...data.keys()].map((datapoint) => {
-        return (
-          <input
-          className="inputboxes"
-          id={datapoint}
-           value={data.get(datapoint) }
-            key={datapoint}
-            onChange={handleChange(datapoint)}
-          />
-        );
+{[...data.keys()].map((datapoint) => {
+  return (
+    <input
+    className="inputboxes"
+    id={datapoint}
+     value={data.get(datapoint) }
+      key={datapoint}
+      onChange={handleChange(datapoint)}
+    />
+  );
 
-      }
-      
-      )}
+}
+
+)}
 
 </div>
+
+:
+<>
+<div className="DataBoxbody2" >
+
+<p>Google Sheet Key</p>
+<input className="InputGoogleSheetsKey" 
+id="InputGoogleSheetsKey"
+   type="text" 
+   value={googleSheetKey} 
+   placeholder="Required(*)" 
+   onInput={ (e) => { 
+    setgoogleSheetKey(e.target.value)
+   }} />
+
+<p>Sheet Number</p>
+<input className="InputGoogleSheetNumber" 
+id="InputGoogleSheetNumber"
+   type="text" 
+   value={googleSheetNumber} 
+   placeholder="Optional" 
+   onInput={ (e) => { 
+    setgoogleSheetNumber(e.target.value)
+   }} />
+<p>Column Number Start</p>
+<input className="InputGoogleSheetStartColumn" 
+id="InputGoogleSheetStartColumn"
+   type="text" 
+   value={googleSheetStartColumn} 
+   placeholder="Optional " 
+   onInput={ (e) => { 
+    setgoogleSheetStartColumn(e.target.value)
+   }} />
+<p>Column Number End</p>
+<input className="InputGoogleSheetEndColumn" 
+id="InputGoogleSheetEndColumn"
+   type="text" 
+   value={googleSheetEndColumn} 
+   placeholder="Optional " 
+   onInput={ (e) => { 
+    setgoogleSheetEndColumn(e.target.value)
+   }} />
+<p>Row Number Start</p>
+<input className="InputGoogleSheetStartRow" 
+id="InputGoogleSheetStartRow"
+   type="text" 
+   value={googleSheetStartRow} 
+   placeholder="Optional " 
+   onInput={ (e) => { 
+    setgoogleSheetStartRow(e.target.value)
+   }} />
+
+</div>
+
+<div className="DataBoxbody3">
+
+
+<p>1eK264_It9ezV8g1Ah_PROiOiOMkKg3KYszvcNHbjso0 </p>
+
+<p>1</p>
+
+<p>0</p>
+<p>1</p>
+
+<p>0</p>
+
+</div>
+
+<div className="DataBoxbody4">
+<p>Demo Example</p>
+<span>
+<a href="https://docs.google.com/spreadsheets/d/1eK264_It9ezV8g1Ah_PROiOiOMkKg3KYszvcNHbjso0/edit#gid=0" target="
+       _blank"> 
+        <Image
+        src="/google-sheets.svg"
+        alt="Google-Sheets"
+        width={75} height={65}  
+        />
+        </a>
+        </span>
+</div>
+</>
+
+
+
+}
+
+
 
 
 </Modal.Body>
@@ -785,6 +921,11 @@ return (
            tooltipcolor={si.tooltipcolor}
            tooltiptextcolor={si.tooltiptextcolor}
            axisColor={si.axisColor}
+           gk={si.gk}
+           gs={si.gs}
+           gsc={si.gsc}
+           gec={si.gec}
+           gsr={si.gsr}
            data={si.data}
            numberofGraphs={numberofGraphs}
            setnumberofGraphs={setnumberofGraphs}
