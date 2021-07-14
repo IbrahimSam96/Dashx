@@ -1,4 +1,4 @@
-import "../Styling.css";
+import "../Styles.css";
 import Navbar from "../Components/NavigationBar";
 //Firebase Authentication
 import '../FirebaseIntialization' 
