@@ -37,7 +37,8 @@ export const getServerSideProps = async (context) => {
         if (dashboards.length < 5) {
 
             await db.collection("Users").doc(uid).collection("Dashboard").add({
-                date: new Date
+                date: new Date,
+                views: 0
             })
                 .then(() => {
                     console.log("Document successfully written!");

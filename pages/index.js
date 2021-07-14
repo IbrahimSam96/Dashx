@@ -158,7 +158,7 @@ const Main = (props) => {
       <div className="landing-intro3">
 
       <h2>
-        Display & Customize Stunning Financial Charts
+        Display & Customize Stunning Financial Charts :)
       </h2>
 
         <div id="customization">

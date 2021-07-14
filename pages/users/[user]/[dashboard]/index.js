@@ -300,10 +300,10 @@ return (
 
 <div className="CreatorInfo">
 
-<TwitterIcon href={`https://localhost:3000/${props.routeU}/${props.routeD}`}size={32} round={true} />
-<LinkedinIcon href={`https://localhost:3000/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
-<WhatsappIcon href={`https://localhost:3000/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
-<RedditIcon href={`https://localhost:3000/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
+<TwitterIcon href="https://github.com"  round={true} />
+<LinkedinIcon url={`https://localhost:3000/${props.routeU}/${props.routeD}`}  round={true} />
+{/* <WhatsappIcon url={`https://localhost:3000/${props.routeU}/${props.routeD}`}size={32} round={true} size={32} round={true} />
+<RedditIcon url={`https://localhost:3000/${props.routeU}/${props.routeD}`}  size={32} round={true} size={32} round={true} /> */}
 
  
 </div>

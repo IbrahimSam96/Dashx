@@ -3,6 +3,7 @@ import { firebaseAdmin } from "../../../FirebaseAdmin";
 import {React, useEffect, useRef, useState} from "react"
 import nookies from "nookies";
 import moment from 'moment';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 import ViewGraph from "../../../Components/viewGraph";
 
@@ -59,7 +60,13 @@ export const getServerSideProps = async (context) => {
     const  textRef =  db.collection("Users").doc(context.query.user).collection("Dashboard").doc(context.query.dashboard).collection("Text");
                 
     const  layoutRef =  db.collection("Users").doc(context.query.user).collection("Dashboard").doc(context.query.dashboard);
+   
+    const increment = firebaseAdmin.firestore.FieldValue.increment(1);
 
+    await layoutRef.update({
+        views: increment
+    })
+    
 
     await graphRef.get().then((snapshot) => {
 
@@ -92,6 +99,7 @@ await textRef.get().then((snapshot) => {
                          }
     })
 
+
     return {
         props: {  
              token, 
@@ -106,17 +114,94 @@ await textRef.get().then((snapshot) => {
          }
       };
 
-    }catch (err) {
-      // either the `token` cookie didn't exist
-      // or token verification failed
-      // either way: redirect to the login page
-      // either the `token` cookie didn't exist
-      // or token verification failed
-      // either way: redirect to the login page
+    } catch (err) {
+
+        const db = firebaseAdmin.firestore(); 
+        const route1 = context.query.user
+        const route2 = context.query.dashboard
+    
+        const Dashboards = [];
+        const userDashboards = db.collection("Users").doc(context.query.user).collection("Dashboard");
+    
+        await userDashboards.get().then((snapchot) => {
+                    
+            snapchot.forEach((obj) => {
+    
+                if(obj.exists){
+    
+                    Dashboards.push( obj.id.toString() )
+        
+                    console.log(obj.id)
+    
+                    }
+            })
+    
+            }) 
+    
+        const dashboardexists = Dashboards.includes( context.query.dashboard.toString() )
+    
+    
+        const Graphs = [] 
+    
+    
+        const Texts = [] 
+    
+        const Layout = []
+    
+        const  graphRef =  db.collection("Users").doc(context.query.user).collection("Dashboard").doc(context.query.dashboard).collection("Graphs");
+                       
+        const  textRef =  db.collection("Users").doc(context.query.user).collection("Dashboard").doc(context.query.dashboard).collection("Text");
+                    
+        const  layoutRef =  db.collection("Users").doc(context.query.user).collection("Dashboard").doc(context.query.dashboard);
+       
+        const increment = firebaseAdmin.firestore.FieldValue.increment(1);
+    
+        await layoutRef.update({
+            views: increment
+        })
+        
+    
+        await graphRef.get().then((snapshot) => {
+    
+            snapshot.forEach((obj) => { 
+    
+                if(obj.exists){
+                Graphs.push( obj.data() )
+                console.log(obj.data() )
+                }
+            })
+        })
+    
+    
+    await textRef.get().then((snapshot) => {
+            snapshot.forEach((obj) => { 
+                if(obj.exists){
+                Texts.push( obj.data() )
+    
+    
+                }
+            })
+        })
+    
+    // Firestore timestamp 
+     await layoutRef.get().then((doc) => {
+            if(doc.exists) {
+                Layout.push(JSON.stringify(doc.data() ) ) 
+                    console.log( doc.data() )
+                             
+                             }
+        })
+
+        
       return { 
                 
         props: {
-           
+            route1,
+            route2,
+            Graphs,
+            Texts,
+            Layout,
+            dashboardexists,
         },
       };
     }
@@ -132,18 +217,23 @@ const Dashboard2 = (props) => {
     console.log(props.Graphs, props.Texts, props.Layout )
     console.log(props.dashboardexists)
 
+
     const layout = JSON.parse(props.Layout)
 
     const createdDate = new Date(layout.date._seconds * 1000)
     
     console.log(moment(createdDate).fromNow())
 
-    return(
+    console.log(layout.views)
+
+
+return(
     
-    <>
-      {props.dashboardexists? 
+<>
+
+{props.dashboardexists? 
       
-    <div className="PublicDashboardPage">
+<div className="PublicDashboardPage">
 
 <div className="PublicDashboardPage1">
 
@@ -217,13 +307,17 @@ const Dashboard2 = (props) => {
 
 
 </div>
-    </div>
+
+<span className="EditInfo2"> <VisibilityIcon /> {layout.views} </span>
+<span className="EditInfo3"> <span>Created</span> {moment(createdDate).fromNow()}</span>
+</div>
     :
     <>
 {/* Dashboard Doesn't exist */}
     </>
     
     }
+
     </>
 
             )
