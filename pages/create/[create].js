@@ -1,7 +1,7 @@
 import {React, useEffect, useRef, useState} from "react"
 import Image from 'next/image'
 import nookies from "nookies";
-import { firebaseAdmin } from "../../firebaseAdmin";
+import { firebaseAdmin } from "../../FirebaseAdmin";
 import { firebaseClient } from "../../FirebaseIntialization";
 import Checkbox from '@material-ui/core/Checkbox';
 import Slider from '@material-ui/core/Slider';

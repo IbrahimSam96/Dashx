@@ -7,7 +7,7 @@ import React, { useRef, useState, useMemo, useEffect } from 'react';
 import nookies from "nookies";
 
 // Admin service account/ FirebaseSDK 
-import { firebaseAdmin } from "../firebaseAdmin";
+import { firebaseAdmin } from "../FirebaseAdmin";
 
 
 //  Components

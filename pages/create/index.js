@@ -1,6 +1,6 @@
 import React from "react";
 import nookies from "nookies";
-import { firebaseAdmin } from "../../firebaseAdmin";
+import { firebaseAdmin } from "../../FirebaseAdmin";
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 export const getServerSideProps = async (context) => {
     try {
