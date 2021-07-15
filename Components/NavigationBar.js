@@ -82,7 +82,7 @@ return (
 {props.token.name ? 
 
  <span className="email" style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>
- {props.token.name.split(" ")[0]} 
+ {props.token.name}
  </span>
  :
  <span className="email" style={{fontFamily:"'Trebuchet MS',  Arial, sans-serif" , color:"white",fontSize:"1.2rem" }}>

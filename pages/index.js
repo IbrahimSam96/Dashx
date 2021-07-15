@@ -78,13 +78,13 @@ const Main = (props) => {
   console.log(props)
 
 
-  if(props.token) {
+  // if(props.token) {
 
-    if(props.token.name){
-    console.log(` Hello ${props.token.name.split(" ")[0]} :)` )
-    }
+  //   if(props.token.name){
+  //   console.log(` Hello ${props.token.name.split(" ")[0]} :)` )
+  //   }
 
-  }
+  // }
 
 
   const g = useRef(null);
