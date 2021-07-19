@@ -1446,7 +1446,7 @@ display: block;
 .PublicDashboardPage1{
   grid-column: 2/14;
   grid-row: 2/6;
-  
+  max-height: 90vh;
   overflow: auto;
 
   

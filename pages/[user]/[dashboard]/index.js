@@ -229,11 +229,11 @@ const Dashboard2 = (props) => {
 
 return(
     
-<>
+<div className="PublicDashboardPage">
 
 {props.dashboardexists? 
       
-<div className="PublicDashboardPage">
+<>
 
 <div className="PublicDashboardPage1">
 
@@ -310,15 +310,17 @@ return(
 
 <span className="EditInfo2"> <VisibilityIcon /> {layout.views} </span>
 <span className="EditInfo3"> <span>Created</span> {moment(createdDate).fromNow()}</span>
-</div>
+</>
+
     :
+
     <>
 {/* Dashboard Doesn't exist */}
     </>
     
     }
 
-    </>
+    </div>
 
             )
 }
