@@ -8,8 +8,6 @@ const  LivePortfolioGraph = (props) => {
 
 useEffect(() => {
 
-    if(window !== "undefined "){
-
         console.log(props.g.current.children.length)
         
             if(props.g.current.children.length > 2){
@@ -17,8 +15,8 @@ useEffect(() => {
                 props.g.current.removeChild(props.g.current.lastChild)
                                   
                 };
-            }
-}, [props.g.current])
+            
+}, [props.g.current.children])
 
 
 
@@ -187,9 +185,7 @@ window.removeEventListener('resize', handleResize);
             });              
                 }    
                  
- const element = 
- 
-        
+ const element =  
 <>
         <span>
         <input 
@@ -287,7 +283,7 @@ return (
 
 )}
 
-export default LivePortfolioGraph
+export default React.memo(LivePortfolioGraph)
 
 
 

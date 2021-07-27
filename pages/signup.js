@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Link from 'next/link';
 import { firebaseClient } from '../FirebaseIntialization';
 
 import GoogleButton from 'react-google-button'
